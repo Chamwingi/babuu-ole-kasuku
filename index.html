@@ -12,6 +12,7 @@
       font-family: Arial, sans-serif;
       background: #f7f7f7;
       color: #222;
+      line-height: 1.6;
     }
 
     header {
@@ -32,20 +33,28 @@
 
     nav {
       background: #222;
-      padding: 12px;
+      padding: 14px 8px;
       text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
     nav a {
       color: white;
       text-decoration: none;
-      margin: 0 10px;
+      margin: 5px 8px;
       font-weight: bold;
+      display: inline-block;
+    }
+
+    nav a:hover {
+      color: #ffd700;
     }
 
     .hero {
       background: white;
-      padding: 50px 20px;
+      padding: 45px 20px;
       text-align: center;
     }
 
@@ -56,12 +65,22 @@
     .hero h2 {
       color: #8b0000;
       font-size: 30px;
+      margin-bottom: 10px;
     }
 
     .container {
       max-width: 1000px;
       margin: auto;
       padding: 30px 15px;
+    }
+
+    section {
+      scroll-margin-top: 70px;
+    }
+
+    .section-title {
+      color: #8b0000;
+      margin-bottom: 20px;
     }
 
     .cards {
@@ -75,20 +94,48 @@
       padding: 25px;
       border-radius: 10px;
       box-shadow: 0 2px 10px #0002;
+      margin-bottom: 20px;
     }
 
     .card h3 {
       color: #8b0000;
+      margin-top: 0;
+    }
+
+    .buttons {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .share {
-      margin-top: 15px;
       display: inline-block;
-      background: #8b0000;
       color: white;
       padding: 10px 15px;
       border-radius: 6px;
       text-decoration: none;
+      font-weight: bold;
+    }
+
+    .whatsapp {
+      background: #25D366;
+    }
+
+    .facebook {
+      background: #1877F2;
+    }
+
+    .share:hover {
+      opacity: 0.85;
+    }
+
+    .gift {
+      text-align: center;
+    }
+
+    .gift-icon {
+      font-size: 55px;
     }
 
     footer {
@@ -98,6 +145,29 @@
       padding: 25px;
       margin-top: 30px;
     }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 25px;
+      }
+
+      .hero h2 {
+        font-size: 24px;
+      }
+
+      nav {
+        padding: 10px 5px;
+      }
+
+      nav a {
+        font-size: 14px;
+        margin: 4px 5px;
+      }
+
+      .card {
+        padding: 20px;
+      }
+    }
   </style>
 </head>
 
@@ -105,7 +175,7 @@
 
 <header>
   <h1>🦜 BABUU OLE KASUKU</h1>
-  <p>Habari • Hadithi • Burudani • Makala</p>
+  <p>Habari • Hadithi • Burudani • Makala • Zawadi</p>
 </header>
 
 <nav>
@@ -113,6 +183,7 @@
   <a href="#habari">Habari</a>
   <a href="#hadithi">Hadithi</a>
   <a href="#burudani">Burudani</a>
+  <a href="#zawadi">Zawadi</a>
   <a href="#kuhusu">Kuhusu</a>
 </nav>
 
@@ -123,33 +194,47 @@
 
   <p>
     Sehemu yako ya kusoma habari mchanganyiko,
-    hadithi, burudani na makala mbalimbali.
+    hadithi, burudani, makala na maudhui mbalimbali
+    yenye kuvutia na kufundisha.
   </p>
 </section>
 
 <div class="container">
 
+  <!-- HABARI -->
   <section id="habari">
-    <h2>📰 Habari Mchanganyiko</h2>
+    <h2 class="section-title">📰 Habari Mchanganyiko</h2>
 
     <div class="cards">
 
       <div class="card">
         <h3>Karibu kwenye tovuti yetu</h3>
+
         <p>
           Hapa tutakuwa tukikuletea habari na taarifa
           mbalimbali zinazovutia wasomaji.
         </p>
 
-        <a class="share"
-           href="https://wa.me/?text=Angalia%20BABUU%20OLE%20KASUKU"
-           target="_blank">
-           Shiriki WhatsApp
-        </a>
+        <div class="buttons">
+
+          <a class="share whatsapp"
+             href="https://wa.me/?text=Angalia%20BABUU%20OLE%20KASUKU"
+             target="_blank">
+             📱 Shiriki WhatsApp
+          </a>
+
+          <a class="share facebook"
+             href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/Chamwingi/babuu-ole-kasuku"
+             target="_blank">
+             🔵 Shiriki Facebook
+          </a>
+
+        </div>
       </div>
 
       <div class="card">
         <h3>✍️ Makala</h3>
+
         <p>
           Sehemu maalumu kwa makala, elimu, ushauri
           na mawazo mbalimbali.
@@ -157,66 +242,142 @@
       </div>
 
       <div class="card">
-        <h3>📖 Hadithi</h3>
+        <h3>🌍 Habari mbalimbali</h3>
+
         <p>
-          Soma hadithi zinazoburudisha na wakati huo huo
-          kutoa mafunzo muhimu katika maisha.
+          Hapa tutaweka taarifa na habari mbalimbali
+          kutoka katika maeneo na nyanja tofauti.
         </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- HADITHI -->
+  <section id="hadithi" style="margin-top:40px;">
+
+    <h2 class="section-title">📖 Hadithi</h2>
+
+    <div class="cards">
+
+      <div class="card">
+        <h3>Hadithi zinazofundisha</h3>
+
+        <p>
+          Hapa ndipo tutakapoweka hadithi zako na simulizi
+          mbalimbali za BABUU OLE KASUKU.
+        </p>
+
+        <div class="buttons">
+
+          <a class="share whatsapp"
+             href="https://wa.me/?text=Soma%20hadithi%20kwenye%20BABUU%20OLE%20KASUKU"
+             target="_blank">
+             📱 Shiriki WhatsApp
+          </a>
+
+          <a class="share facebook"
+             href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/Chamwingi/babuu-ole-kasuku"
+             target="_blank">
+             🔵 Shiriki Facebook
+          </a>
+
+        </div>
       </div>
 
       <div class="card">
-        <h3>🎭 Burudani</h3>
+        <h3>📚 Simulizi</h3>
+
         <p>
-          Habari za burudani, vichekesho na maudhui
-          mengine ya kuvutia.
+          Simulizi mbalimbali zitawekwa hapa kwa ajili
+          ya burudani, elimu na mafunzo ya maisha.
         </p>
       </div>
 
     </div>
+
   </section>
 
-  <section id="hadithi" style="margin-top:40px;">
-    <h2>📖 Hadithi</h2>
 
-    <div class="card">
-      <h3>Hadithi zinazofundisha</h3>
-      <p>
-        Hapa ndipo tutakapoweka hadithi zako na simulizi
-        mbalimbali za BABUU OLE KASUKU.
-      </p>
-    </div>
-  </section>
-
+  <!-- BURUDANI -->
   <section id="burudani" style="margin-top:40px;">
-    <h2>🎭 Burudani</h2>
+
+    <h2 class="section-title">🎭 Burudani</h2>
 
     <div class="card">
+
       <h3>Burudani na vichekesho</h3>
+
       <p>
         Sehemu hii itakuwa kwa ajili ya maudhui ya
-        burudani na vichekesho.
+        burudani, vichekesho na mambo mengine
+        ya kuvutia.
       </p>
+
     </div>
+
   </section>
 
+
+  <!-- ZAWADI -->
+  <section id="zawadi" style="margin-top:40px;">
+
+    <h2 class="section-title">🎁 Zawadi</h2>
+
+    <div class="card gift">
+
+      <div class="gift-icon">🎁</div>
+
+      <h3>Zawadi za BABUU OLE KASUKU</h3>
+
+      <p>
+        Hapa tutakuwa tukiweka taarifa kuhusu zawadi,
+        mashindano na fursa mbalimbali kwa wasomaji
+        wa BABUU OLE KASUKU.
+      </p>
+
+      <p>
+        <strong>Endelea kutembelea tovuti yetu
+        ili usikose taarifa mpya.</strong>
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- KUHUSU -->
   <section id="kuhusu" style="margin-top:40px;">
-    <h2>ℹ️ Kuhusu BABUU OLE KASUKU</h2>
+
+    <h2 class="section-title">ℹ️ Kuhusu BABUU OLE KASUKU</h2>
 
     <div class="card">
+
       <p>
         BABUU OLE KASUKU ni jukwaa la maudhui mbalimbali
         linalolenga kuwakutanisha wasomaji na habari,
-        hadithi, makala na burudani.
+        hadithi, makala, burudani na maudhui mengine
+        yenye manufaa.
       </p>
+
     </div>
+
   </section>
 
 </div>
 
 <footer>
+
   <p>© 2026 BABUU OLE KASUKU</p>
-  <p>Habari • Hadithi • Burudani • Makala</p>
+
+  <p>
+    Habari • Hadithi • Burudani • Makala • Zawadi
+  </p>
+
 </footer>
+
 <script src="language.js"></script>
+
 </body>
 </html>
