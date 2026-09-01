@@ -52,6 +52,25 @@
       color: #ffd700;
     }
 
+    .language-box {
+      background: #333;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .language-box label {
+      color: white;
+      font-weight: bold;
+      margin-right: 8px;
+    }
+
+    #languageSelector {
+      padding: 7px 10px;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+    }
+
     .hero {
       background: white;
       padding: 45px 20px;
@@ -75,7 +94,7 @@
     }
 
     section {
-      scroll-margin-top: 70px;
+      scroll-margin-top: 100px;
     }
 
     .section-title {
@@ -183,13 +202,29 @@
 
   <!-- MENU -->
   <nav>
-    <a href="#nyumbani">Nyumbani</a>
-    <a href="#habari">Habari</a>
-    <a href="#hadithi">Hadithi</a>
-    <a href="#burudani">Burudani</a>
-    <a href="#zawadi">Zawadi</a>
-    <a href="#kuhusu">Kuhusu</a>
+    <a href="#nyumbani" data-i18n="home">Nyumbani</a>
+    <a href="#habari" data-i18n="news">Habari</a>
+    <a href="#hadithi" data-i18n="stories">Hadithi</a>
+    <a href="#burudani" data-i18n="entertainment">Burudani</a>
+    <a href="#makala" data-i18n="articles">Makala</a>
+    <a href="#zawadi" data-i18n="gifts">Zawadi</a>
+    <a href="#kuhusu" data-i18n="about">Kuhusu</a>
   </nav>
+
+
+  <!-- LANGUAGE -->
+  <div class="language-box">
+
+    <label for="languageSelector" data-i18n="languageLabel">
+      Chagua lugha
+    </label>
+
+    <select id="languageSelector" onchange="changeLanguage(this.value)">
+      <option value="sw">Kiswahili</option>
+      <option value="en">English</option>
+    </select>
+
+  </div>
 
 
   <!-- NYUMBANI -->
@@ -197,9 +232,11 @@
 
     <div class="parrot">🦜</div>
 
-    <h2>Karibu BABUU OLE KASUKU</h2>
+    <h2 data-i18n="welcome">
+      Karibu BABUU OLE KASUKU
+    </h2>
 
-    <p>
+    <p data-i18n="intro">
       Sehemu yako ya kusoma habari mchanganyiko,
       hadithi, burudani, makala na maudhui mbalimbali
       yenye kuvutia na kufundisha.
@@ -214,15 +251,19 @@
     <!-- HABARI -->
     <section id="habari">
 
-      <h2 class="section-title">📰 Habari Mchanganyiko</h2>
+      <h2 class="section-title" data-i18n="mixedNews">
+        📰 Habari Mchanganyiko
+      </h2>
 
       <div class="cards">
 
         <div class="card">
 
-          <h3>Karibu kwenye tovuti yetu</h3>
+          <h3 data-i18n="welcomeTitle">
+            Karibu kwenye tovuti yetu
+          </h3>
 
-          <p>
+          <p data-i18n="welcomeText">
             Hapa tutakuwa tukikuletea habari na taarifa
             mbalimbali zinazovutia wasomaji.
           </p>
@@ -233,14 +274,14 @@
               class="share whatsapp"
               href="https://wa.me/?text=Angalia%20BABUU%20OLE%20KASUKU"
               target="_blank">
-              📱 Shiriki WhatsApp
+              📱 <span data-i18n="shareWhatsApp">Shiriki WhatsApp</span>
             </a>
 
             <a
               class="share facebook"
-              href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/Chamwingi/babuu-ole-kasuku"
+              href="https://www.facebook.com/sharer/sharer.php?u=https://chamwingi.github.io/babuu-ole-kasuku/"
               target="_blank">
-              🔵 Shiriki Facebook
+              🔵 <span data-i18n="shareFacebook">Shiriki Facebook</span>
             </a>
 
           </div>
@@ -248,11 +289,14 @@
         </div>
 
 
-        <div class="card">
+        <!-- MAKALA -->
+        <div class="card" id="makala">
 
-          <h3>✍️ Makala</h3>
+          <h3 data-i18n="articlesTitle">
+            ✍️ Makala
+          </h3>
 
-          <p>
+          <p data-i18n="articlesText">
             Sehemu maalumu kwa makala, elimu, ushauri
             na mawazo mbalimbali.
           </p>
@@ -262,7 +306,9 @@
 
         <div class="card">
 
-          <h3>🌍 Habari mbalimbali</h3>
+          <h3>
+            🌍 Habari mbalimbali
+          </h3>
 
           <p>
             Hapa tutaweka taarifa na habari mbalimbali
@@ -279,15 +325,19 @@
     <!-- HADITHI -->
     <section id="hadithi" style="margin-top:40px;">
 
-      <h2 class="section-title">📖 Hadithi</h2>
+      <h2 class="section-title" data-i18n="storiesHeading">
+        📖 Hadithi
+      </h2>
 
       <div class="cards">
 
         <div class="card">
 
-          <h3>Hadithi zinazofundisha</h3>
+          <h3 data-i18n="storiesTitle">
+            Hadithi zinazofundisha
+          </h3>
 
-          <p>
+          <p data-i18n="storiesDescription">
             Hapa ndipo tutakapoweka hadithi zako na simulizi
             mbalimbali za BABUU OLE KASUKU.
           </p>
@@ -298,14 +348,14 @@
               class="share whatsapp"
               href="https://wa.me/?text=Soma%20hadithi%20kwenye%20BABUU%20OLE%20KASUKU"
               target="_blank">
-              📱 Shiriki WhatsApp
+              📱 <span data-i18n="shareWhatsApp">Shiriki WhatsApp</span>
             </a>
 
             <a
               class="share facebook"
-              href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/Chamwingi/babuu-ole-kasuku"
+              href="https://www.facebook.com/sharer/sharer.php?u=https://chamwingi.github.io/babuu-ole-kasuku/"
               target="_blank">
-              🔵 Shiriki Facebook
+              🔵 <span data-i18n="shareFacebook">Shiriki Facebook</span>
             </a>
 
           </div>
@@ -315,9 +365,11 @@
 
         <div class="card">
 
-          <h3>📚 Simulizi</h3>
+          <h3 data-i18n="storiesMoreTitle">
+            📚 Simulizi
+          </h3>
 
-          <p>
+          <p data-i18n="storiesMoreText">
             Simulizi mbalimbali zitawekwa hapa kwa ajili
             ya burudani, elimu na mafunzo ya maisha.
           </p>
@@ -332,16 +384,19 @@
     <!-- BURUDANI -->
     <section id="burudani" style="margin-top:40px;">
 
-      <h2 class="section-title">🎭 Burudani</h2>
+      <h2 class="section-title" data-i18n="entertainmentHeading">
+        🎭 Burudani
+      </h2>
 
       <div class="card">
 
-        <h3>Burudani na vichekesho</h3>
+        <h3 data-i18n="entertainmentTitle">
+          Burudani na vichekesho
+        </h3>
 
-        <p>
+        <p data-i18n="entertainmentDescription">
           Sehemu hii itakuwa kwa ajili ya maudhui ya
-          burudani, vichekesho na mambo mengine
-          ya kuvutia.
+          burudani na vichekesho.
         </p>
 
       </div>
@@ -352,22 +407,26 @@
     <!-- ZAWADI -->
     <section id="zawadi" style="margin-top:40px;">
 
-      <h2 class="section-title">🎁 Zawadi</h2>
+      <h2 class="section-title" data-i18n="giftsHeading">
+        🎁 Zawadi
+      </h2>
 
       <div class="card gift">
 
         <div class="gift-icon">🎁</div>
 
-        <h3>Zawadi za BABUU OLE KASUKU</h3>
+        <h3 data-i18n="giftsTitle">
+          Zawadi za BABUU OLE KASUKU
+        </h3>
 
-        <p>
+        <p data-i18n="giftsText">
           Hapa tutakuwa tukiweka taarifa kuhusu zawadi,
           mashindano na fursa mbalimbali kwa wasomaji
           wa BABUU OLE KASUKU.
         </p>
 
         <p>
-          <strong>
+          <strong data-i18n="giftsNotice">
             Endelea kutembelea tovuti yetu
             ili usikose taarifa mpya.
           </strong>
@@ -381,13 +440,13 @@
     <!-- KUHUSU -->
     <section id="kuhusu" style="margin-top:40px;">
 
-      <h2 class="section-title">
+      <h2 class="section-title" data-i18n="aboutHeading">
         ℹ️ Kuhusu BABUU OLE KASUKU
       </h2>
 
       <div class="card">
 
-        <p>
+        <p data-i18n="aboutText">
           BABUU OLE KASUKU ni jukwaa la maudhui mbalimbali
           linalolenga kuwakutanisha wasomaji na habari,
           hadithi, makala, burudani na maudhui mengine
@@ -407,13 +466,14 @@
 
     <p>© 2026 BABUU OLE KASUKU</p>
 
-    <p>
+    <p data-i18n="footer">
       Habari • Hadithi • Burudani • Makala • Zawadi
     </p>
 
   </footer>
 
 
+  <!-- LANGUAGE SCRIPT -->
   <script src="language.js"></script>
 
 </body>
