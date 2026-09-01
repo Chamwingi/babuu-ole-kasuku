@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>BABUU OLE KASUKU - Habari</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+      color: #222;
+      line-height: 1.7;
+    }
+
+    header {
+      background: #8b0000;
+      color: white;
+      text-align: center;
+      padding: 25px 15px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 30px;
+    }
+
+    nav {
+      background: #222;
+      padding: 14px 8px;
+      text-align: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 5px 8px;
+      font-weight: bold;
+      display: inline-block;
+    }
+
+    nav a:hover {
+      color: #ffd700;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: auto;
+      padding: 35px 15px;
+    }
+
+    .article {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px #0002;
+    }
+
+    .article h2 {
+      color: #8b0000;
+      font-size: 30px;
+      margin-top: 0;
+    }
+
+    .date {
+      color: #777;
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    .back {
+      display: inline-block;
+      background: #8b0000;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-bottom: 25px;
+    }
+
+    .back:hover {
+      opacity: 0.85;
+    }
+
+    .buttons {
+      margin-top: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .share {
+      color: white;
+      padding: 10px 15px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .whatsapp {
+      background: #25D366;
+    }
+
+    .facebook {
+      background: #1877F2;
+    }
+
+    .share:hover {
+      opacity: 0.85;
+    }
+
+    footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 25px;
+      margin-top: 30px;
+    }
+
+    @media (max-width: 600px) {
+      .article {
+        padding: 20px;
+      }
+
+      .article h2 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <h1>🦜 BABUU OLE KASUKU</h1>
+    <p>Habari • Hadithi • Burudani • Makala • Zawadi</p>
+  </header>
+
+
+  <!-- MENU -->
+  <nav>
+    <a href="index.html">🏠 Nyumbani</a>
+    <a href="habari.html">📰 Habari</a>
+    <a href="index.html#hadithi">📖 Hadithi</a>
+    <a href="index.html#burudani">🎭 Burudani</a>
+    <a href="index.html#makala">✍️ Makala</a>
+    <a href="index.html#zawadi">🎁 Zawadi</a>
+    <a href="index.html#kuhusu">ℹ️ Kuhusu</a>
+  </nav>
+
+
+  <!-- HABARI -->
+  <div class="container">
+
+    <article class="article">
+
+      <a class="back" href="habari.html">
+        ← Rudi kwenye Habari
+      </a>
+
+      <h2>
+        BABUU OLE KASUKU Yazindua Jukwaa Jipya la Habari na Maudhui
+      </h2>
+
+      <div class="date">
+        📅 Septemba 1, 2026
+      </div>
+
+      <p>
+        BABUU OLE KASUKU imezindua jukwaa lake la mtandaoni
+        kwa lengo la kuwafikishia wasomaji habari, hadithi,
+        makala, burudani na maudhui mbalimbali yenye manufaa.
+      </p>
+
+      <p>
+        Jukwaa hili limeandaliwa kuwa sehemu ambayo wasomaji
+        wanaweza kupata taarifa mbalimbali kwa urahisi,
+        huku likitoa nafasi kwa maudhui ya aina tofauti
+        yanayolenga kuelimisha, kuburudisha na kutoa taarifa.
+      </p>
+
+      <p>
+        Kwa mujibu wa mpango wa jukwaa hilo, sehemu ya habari
+        itakuwa ikiongezewa taarifa mpya mara kwa mara.
+        Wasomaji wataweza pia kushiriki habari wanazozipenda
+        kupitia WhatsApp na Facebook.
+      </p>
+
+      <p>
+        BABUU OLE KASUKU inalenga kuendelea kupanua maudhui
+        yake kadiri tovuti inavyokua, ikiwa ni pamoja na
+        hadithi, makala, burudani, michezo, jamii na mada
+        nyingine zinazowavutia wasomaji.
+      </p>
+
+      <p>
+        <strong>
+          Endelea kutembelea BABUU OLE KASUKU kwa habari
+          na maudhui mapya.
+        </strong>
+      </p>
+
+
+      <!-- SHARING -->
+      <div class="buttons">
+
+        <a
+          class="share whatsapp"
+          href="https://wa.me/?text=Soma%20habari%20hii%20kwenye%20BABUU%20OLE%20KASUKU%3A%20https%3A%2F%2Fchamwingi.github.io%2Fbabuu-ole-kasuku%2Fhabari-ya-kwanza.html"
+          target="_blank">
+          📱 Shiriki WhatsApp
+        </a>
+
+        <a
+          class="share facebook"
+          href="https://www.facebook.com/sharer/sharer.php?u=https://chamwingi.github.io/babuu-ole-kasuku/habari-ya-kwanza.html"
+          target="_blank">
+          🔵 Shiriki Facebook
+        </a>
+
+      </div>
+
+    </article>
+
+  </div>
+
+
+  <!-- FOOTER -->
+  <footer>
+
+    <p>© 2026 BABUU OLE KASUKU</p>
+
+    <p>
+      Habari • Hadithi • Burudani • Makala • Zawadi
+    </p>
+
+  </footer>
+
+</body>
+</html>
