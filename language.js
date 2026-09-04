@@ -123,8 +123,6 @@ function changeLanguage(lang) {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-  const savedLanguage =
-    localStorage.getItem("babuuLanguage") || "sw";
-
-  changeLanguage(savedLanguage);
+changeLanguage("sw");
+ 
 });
