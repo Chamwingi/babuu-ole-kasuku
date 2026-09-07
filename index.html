@@ -506,6 +506,28 @@
 
   <!-- LANGUAGE SCRIPT -->
   <script src="language.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
+  const SUPABASE_URL = 'https://tykxdrucylyamvhgfjdq.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_IHcI_DjtdVEMuQYUXCFakw_ygboXT8I';
 
+  const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+</script><script>
+  async function testSupabase() {
+    const { data, error } = await supabaseClient
+      .from('posts')
+      .select('*');
+
+    if (error) {
+      console.error('Supabase error:', error);
+    } else {
+      console.log('Supabase imeunganishwa vizuri:', data);
+    }
+  }
+
+  testSupabase();
+</script>
 </body>
 </html>
