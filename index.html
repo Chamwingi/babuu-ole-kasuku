@@ -258,38 +258,11 @@
       </h2>
 
       <div class="cards">
-
-        <div class="card">
-
-          <h3 data-i18n="welcomeTitle">
-            Karibu kwenye tovuti yetu
-          </h3>
-
-          <p data-i18n="welcomeText">
-            Hapa tutakuwa tukikuletea habari na taarifa
-            mbalimbali zinazovutia wasomaji.
-          </p>
-<a href="habari-ya-kwanza.html" class="read-more">
-  Soma zaidi →
-</a>
-          <div class="buttons">
-
-            <a
-              class="share whatsapp"
-              href="https://wa.me/?text=Angalia%20BABUU%20OLE%20KASUKU"
-              target="_blank">
-              📱 <span data-i18n="shareWhatsApp">Shiriki WhatsApp</span>
-            </a>
-
-            <a
-              class="share facebook"
-              href="https://www.facebook.com/sharer/sharer.php?u=https://chamwingi.github.io/babuu-ole-kasuku/"
-              target="_blank">
-              🔵 <span data-i18n="shareFacebook">Shiriki Facebook</span>
-            </a>
-
-          </div>
-
+<div class="card">
+  <h3>Inapakia habari...</h3>
+  <p>Tafadhali subiri kidogo.</p>
+</div>
+       
         </div>
 
 
@@ -514,20 +487,85 @@
     SUPABASE_URL,
     SUPABASE_KEY
   );
-</script><script>
-  async function testSupabase() {
+</script>
+ <script>
+  async function loadPosts() {
+
     const { data, error } = await supabaseClient
       .from('posts')
-      .select('*');
+      .select('*')
+      .order('id', { ascending: false });
 
     if (error) {
       console.error('Supabase error:', error);
-    } else {
-      console.log('Supabase imeunganishwa vizuri:', data);
+      return;
     }
+
+    console.log('Posts kutoka Supabase:', data);
+
+    const habariSection = document.querySelector('#habari .cards');
+
+    if (!habariSection) {
+      console.error('Sehemu ya Habari haijapatikana.');
+      return;
+    }
+
+    if (!data || data.length === 0) {
+      habariSection.innerHTML = `
+        <div class="card">
+          <h3>Hakuna habari bado</h3>
+          <p>Habari mpya zitaonekana hapa.</p>
+        </div>
+      `;
+      return;
+    }
+
+    habariSection.innerHTML = data.map(post => `
+      <div class="card">
+
+        <h3>${post.title || ''}</h3>
+
+        ${post.image_url ? `
+          <img
+            src="${post.image_url}"
+            alt="${post.title || 'Habari'}"
+            style="width:100%; border-radius:10px; margin-bottom:15px;">
+        ` : ''}
+
+        <p>
+          ${post.content || ''}
+        </p>
+
+        <p>
+          <strong>Kategoria:</strong>
+          ${post.category || 'Habari'}
+        </p>
+
+        <div class="buttons">
+
+          <a
+            class="share whatsapp"
+            href="https://wa.me/?text=${encodeURIComponent(
+              post.title + ' - BABUU OLE KASUKU'
+            )}"
+            target="_blank">
+            📱 Shiriki WhatsApp
+          </a>
+
+          <a
+            class="share facebook"
+            href="https://www.facebook.com/sharer/sharer.php?u=https://chamwingi.github.io/babuu-ole-kasuku/"
+            target="_blank">
+            🔵 Shiriki Facebook
+          </a>
+
+        </div>
+
+      </div>
+    `).join('');
   }
 
-  testSupabase();
+  loadPosts();
 </script>
 </body>
 </html>
