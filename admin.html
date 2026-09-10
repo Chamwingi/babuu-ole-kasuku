@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>BABUU OLE KASUKU — DASHBOARD</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #8b0000;
+      color: white;
+      padding: 25px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    .dashboard {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+
+    .welcome {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .menu {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+    }
+
+    .menu button {
+      padding: 20px;
+      border: none;
+      border-radius: 10px;
+      background: #222;
+      color: white;
+      font-size: 17px;
+      cursor: pointer;
+    }
+
+    .menu button:hover {
+      background: #8b0000;
+    }
+
+    .add-news {
+      background: white;
+      margin-top: 25px;
+      padding: 25px;
+      border-radius: 10px;
+    }
+
+    .add-news h2 {
+      margin-top: 0;
+      color: #8b0000;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 7px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    textarea {
+      min-height: 180px;
+      resize: vertical;
+    }
+
+    .publish {
+      margin-top: 20px;
+      padding: 14px 25px;
+      border: none;
+      border-radius: 7px;
+      background: green;
+      color: white;
+      font-size: 17px;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      margin-top: 30px;
+      background: #222;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>🦜 BABUU OLE KASUKU</h1>
+    <p>DASHBOARD YA USIMAMIZI</p>
+  </header>
+
+  <main class="dashboard">
+
+    <div class="welcome">
+      <h2>Karibu kwenye Dashboard</h2>
+      <p>
+        Hapa tutaweza kusimamia habari, hadithi, burudani,
+        makala na maudhui mbalimbali ya BABUU OLE KASUKU.
+      </p>
+    </div>
+
+    <div class="menu">
+      <button>📝 Ongeza Habari</button>
+      <button>📚 Ongeza Hadithi</button>
+      <button>🎭 Ongeza Burudani</button>
+      <button>📖 Ongeza Makala</button>
+      <button>🖼️ Ongeza Picha</button>
+      <button>✏️ Hariri</button>
+      <button>🗑️ Futa</button>
+      <button>🔎 Tafuta</button>
+    </div>
+
+    <div class="add-news">
+
+      <h2>📝 Ongeza Habari</h2>
+
+      <label for="title">Kichwa cha Habari</label>
+      <input
+        type="text"
+        id="title"
+        placeholder="Andika kichwa cha habari hapa"
+      >
+
+      <label for="category">Kategoria</label>
+      <select id="category">
+        <option value="habari">Habari Mchanganyiko</option>
+        <option value="michezo">Habari za Michezo</option>
+        <option value="burudani">Burudani</option>
+        <option value="makala">Makala</option>
+        <option value="hadithi">Hadithi</option>
+      </select>
+
+      <label for="content">Maudhui ya Habari</label>
+      <textarea
+        id="content"
+        placeholder="Andika habari yako hapa..."
+      ></textarea>
+
+      <label for="image_url">Kiungo cha Picha</label>
+      <input
+        type="text"
+        id="image_url"
+        placeholder="Weka link ya picha hapa (hiari)"
+      >
+
+      <button class="publish">
+        🟢 CHAPISHA HABARI
+      </button>
+
+    </div>
+
+  </main>
+
+  <footer>
+    © 2026 BABUU OLE KASUKU
+  </footer>
+
+</body>
+</html>
