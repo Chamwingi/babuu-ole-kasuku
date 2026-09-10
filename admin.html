@@ -186,6 +186,59 @@
   <footer>
     © 2026 BABUU OLE KASUKU
   </footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    const SUPABASE_URL = 'https://tykxdrucylyamvhgfjdq.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_IHcI_DjtdVEMuQYUXCFakw_ygboXT8I';
+
+    const supabaseClient = supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+    const publishButton = document.querySelector('.publish');
+
+    publishButton.addEventListener('click', async function () {
+
+      const title = document.querySelector('#title').value.trim();
+      const category = document.querySelector('#category').value;
+      const content = document.querySelector('#content').value.trim();
+      const image_url = document.querySelector('#image_url').value.trim();
+
+      if (!title || !content) {
+        alert('Tafadhali jaza kichwa na maudhui ya habari.');
+        return;
+      }
+
+      const { data, error } = await supabaseClient
+        .from('posts')
+        .insert([
+          {
+            title: title,
+            category: category,
+            content: content,
+            image_url: image_url || null
+          }
+        ])
+        .select();
+
+      if (error) {
+        console.error('Hitilafu:', error);
+        alert('Habari haikuweza kuchapishwa. Angalia Console.');
+        return;
+      }
+
+      alert('Habari imechapishwa kikamilifu! 🎉');
+
+      document.querySelector('#title').value = '';
+      document.querySelector('#content').value = '';
+      document.querySelector('#image_url').value = '';
+
+      console.log('Habari imehifadhiwa:', data);
+    });
+  </script>
 
 </body>
 </html>
+
