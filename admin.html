@@ -413,9 +413,44 @@
     </div>
   `).join('');
 }
+async function editPost(id) {
+
+  const { data, error } = await supabaseClient
+    .from('posts')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error) {
+    console.error('Hitilafu ya kupata habari:', error);
+    alert('Habari haikuweza kufunguliwa kwa ajili ya kuhaririwa.');
+    return;
+  }
+
+  document.querySelector('#title').value = data.title || '';
+  document.querySelector('#category').value = data.category || 'habari';
+  document.querySelector('#content').value = data.content || '';
+
+  if (data.image_url) {
+    imagePreview.src = data.image_url;
+    imagePreview.style.display = 'block';
+  } else {
+    imagePreview.src = '';
+    imagePreview.style.display = 'none';
+  }
+
+  document.querySelector('#title').scrollIntoView({
+    behavior: 'smooth',
+    block: 'center'
+  });
+
+  alert('Habari imefunguliwa. Sasa unaweza kuhariri taarifa zake.');
+}
 
 loadPostsForEdit();
   </script>
+
+  
 
 </body>
 </html>
