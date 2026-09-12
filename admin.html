@@ -344,7 +344,77 @@
 
       }
 
-    });
+    });async function loadPostsForEdit() {
+
+  const postsList = document.querySelector('#posts-list');
+
+  const { data, error } = await supabaseClient
+    .from('posts')
+    .select('*')
+    .order('id', { ascending: false });
+
+  if (error) {
+    console.error('Hitilafu ya kupakia habari:', error);
+    postsList.innerHTML = '<p>Habari hazikuweza kupakiwa.</p>';
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    postsList.innerHTML = '<p>Hakuna habari zilizopo.</p>';
+    return;
+  }
+
+  postsList.innerHTML = data.map(post => `
+    <div style="
+      border:1px solid #ddd;
+      padding:15px;
+      margin-bottom:15px;
+      border-radius:8px;
+      background:#fafafa;
+    ">
+
+      ${post.image_url ? `
+        <img
+          src="${post.image_url}"
+          style="
+            max-width:200px;
+            max-height:120px;
+            border-radius:8px;
+            display:block;
+            margin-bottom:10px;
+          "
+        >
+      ` : ''}
+
+      <h3>${post.title}</h3>
+
+      <p>
+        <strong>Kategoria:</strong>
+        ${post.category || ''}
+      </p>
+
+      <p>${post.content || ''}</p>
+
+      <button
+        type="button"
+        onclick="editPost(${post.id})"
+        style="
+          padding:10px 18px;
+          border:none;
+          border-radius:6px;
+          background:#8b0000;
+          color:white;
+          cursor:pointer;
+        "
+      >
+        ✏️ Hariri
+      </button>
+
+    </div>
+  `).join('');
+}
+
+loadPostsForEdit();
   </script>
 
 </body>
