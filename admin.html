@@ -223,8 +223,9 @@
       SUPABASE_KEY
     );
 
-    const publishButton = document.querySelector('.publish');
-    let editingPostId = null;
+   const publishButton = document.querySelector('.publish');
+let editingPostId = null;
+let isSaving = false;
     const imageFile = document.querySelector('#image_file');
     const imagePreview = document.querySelector('#image_preview');
 
@@ -254,7 +255,11 @@
     });
 
     publishButton.addEventListener('click', async function () {
+if (isSaving) {
+  return;
+}
 
+isSaving = true;
       const title = document.querySelector('#title').value.trim();
       const category = document.querySelector('#category').value;
       const content = document.querySelector('#content').value.trim();
@@ -367,10 +372,13 @@ editingPostId = null;
         console.error('Hitilafu:', error);
         alert(error.message);
 
-      } finally {
+       } finally {
 
-        publishButton.disabled = false;
-        publishButton.textContent = '🟢 CHAPISHA HABARI';
+  isSaving = false;
+  publishButton.disabled = false;
+  publishButton.textContent = '🟢 CHAPISHA HABARI';
+
+}
 
       }
 
