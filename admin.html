@@ -224,6 +224,7 @@
     );
 
     const publishButton = document.querySelector('.publish');
+    let editingPostId = null;
     const imageFile = document.querySelector('#image_file');
     const imagePreview = document.querySelector('#image_preview');
 
@@ -303,27 +304,56 @@
           image_url = publicUrlData.publicUrl;
         }
 
-        const { data, error } = await supabaseClient
-          .from('posts')
-          .insert([
-            {
-              title: title,
-              category: category,
-              content: content,
-              image_url: image_url
-            }
-          ])
-          .select();
+ let data;
+let error;
 
-        if (error) {
-          console.error('Hitilafu ya kuhifadhi habari:', error);
-          throw new Error(
-            'Habari haikuweza kuhifadhiwa: ' + error.message
-          );
-        }
+if (editingPostId) {
 
+  const updateData = {
+    title: title,
+    category: category,
+    content: content
+  };
+
+  if (file) {
+    updateData.image_url = image_url;
+  }
+
+  const result = await supabaseClient
+    .from('posts')
+    .update(updateData)
+    .eq('id', editingPostId)
+    .select();
+
+  data = result.data;
+  error = result.error;
+
+} else {
+
+  const result = await supabaseClient
+    .from('posts')
+    .insert([
+      {
+        title: title,
+        category: category,
+        content: content,
+        image_url: image_url
+      }
+    ])
+    .select();
+
+  data = result.data;
+  error = result.error;
+}
+
+if (error) {
+  console.error('Hitilafu ya kuhifadhi habari:', error);
+  throw new Error(
+    'Habari haikuweza kuhifadhiwa: ' + error.message
+  );
+}
         alert('Habari imechapishwa kikamilifu! 🎉');
-
+editingPostId = null;
         document.querySelector('#title').value = '';
         document.querySelector('#content').value = '';
         imageFile.value = '';
@@ -414,7 +444,7 @@
   `).join('');
 }
 async function editPost(id) {
-
+editingPostId = id;
   const { data, error } = await supabaseClient
     .from('posts')
     .select('*')
