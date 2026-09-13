@@ -385,7 +385,7 @@ editingPostId = null;
     });async function loadPostsForEdit() {
 
   const postsList = document.querySelector('#posts-list');
-
+console.log('POSTS LIST:', postsList);
   const { data, error } = await supabaseClient
     .from('posts')
     .select('*')
