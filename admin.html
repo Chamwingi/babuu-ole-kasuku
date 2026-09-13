@@ -448,6 +448,21 @@ editingPostId = null;
         ✏️ Hariri
       </button>
 
+<button
+  type="button"
+  onclick="deletePost(${post.id})"
+  style="
+    margin-left:10px;
+    padding:10px 18px;
+    border:none;
+    border-radius:6px;
+    background:#222;
+    color:white;
+    cursor:pointer;
+  "
+>
+  🗑️ Futa
+</button>
     </div>
   `).join('');
 }
@@ -484,7 +499,30 @@ editingPostId = id;
 
   alert('Habari imefunguliwa. Sasa unaweza kuhariri taarifa zake.');
 }
+async function deletePost(id) {
+  const confirmDelete = confirm(
+    'Una uhakika unataka kufuta habari hii?'
+  );
 
+  if (!confirmDelete) {
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from('posts')
+    .delete()
+    .eq('id', id);
+
+  if (error) {
+    console.error('Hitilafu ya kufuta habari:', error);
+    alert('Habari haikufutika: ' + error.message);
+    return;
+  }
+
+  alert('Habari imefutwa kikamilifu. 🗑️');
+
+  loadPostsForEdit();
+}
 loadPostsForEdit();
   </script>
 
