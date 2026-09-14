@@ -152,7 +152,7 @@
       <button>🖼️ Ongeza Picha</button>
       <button>✏️ Hariri</button>
       <button>🗑️ Futa</button>
-      <button>🔎 Tafuta</button>
+     <button type="button" onclick="document.querySelector('#search-section').scrollIntoView({behavior:'smooth'})">🔎 Tafuta</button>
     </div>
 <!-- HABARI ZILIZOPO -->
 <div class="add-news" id="edit-section">
@@ -161,6 +161,21 @@
 
   <div id="posts-list">
     <p>Inapakia habari zilizopo...</p>
+  </div>
+
+</div>
+    <div class="add-news" id="search-section">
+
+  <h2>🔎 Tafuta Habari</h2>
+
+  <input
+    type="text"
+    id="search-input"
+    placeholder="Andika kichwa cha habari unachotafuta..."
+  >
+
+  <div id="search-results" style="margin-top:20px;">
+    <p>Andika neno hapo juu kutafuta habari.</p>
   </div>
 
 </div>
@@ -526,8 +541,62 @@ async function deletePost(id) {
  console.log('LOAD POSTS INAITWA');
 loadPostsForEdit();
 }
-    loadPostsForEdit();
-  </script>
+      loadPostsForEdit();
+
+    const searchInput = document.querySelector('#search-input');
+    const searchResults = document.querySelector('#search-results');
+
+    searchInput.addEventListener('input', async function () {
+
+      const searchText = searchInput.value.trim().toLowerCase();
+
+      if (!searchText) {
+        searchResults.innerHTML =
+          '<p>Andika neno hapo juu kutafuta habari.</p>';
+        return;
+      }
+
+      const { data, error } = await supabaseClient
+        .from('posts')
+        .select('*')
+        .order('id', { ascending: false });
+
+      if (error) {
+        console.error('Hitilafu ya kutafuta:', error);
+        searchResults.innerHTML =
+          '<p>Habari hazikuweza kutafutwa.</p>';
+        return;
+      }
+
+      const results = data.filter(post =>
+        (post.title || '').toLowerCase().includes(searchText)
+      );
+
+      if (results.length === 0) {
+        searchResults.innerHTML =
+          '<p>Hakuna habari iliyopatikana.</p>';
+        return;
+      }
+
+      searchResults.innerHTML = results.map(post => `
+        <div style="
+          border:1px solid #ddd;
+          padding:15px;
+          margin-bottom:15px;
+          border-radius:8px;
+          background:#fafafa;
+        ">
+          <h3>${post.title}</h3>
+
+          <p>
+            <strong>Kategoria:</strong>
+            ${post.category || ''}
+          </p>
+
+          <p>${post.content || ''}</p>
+        </div>
+      `).join('');
+    });
 
   
 
