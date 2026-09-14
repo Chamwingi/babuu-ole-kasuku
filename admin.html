@@ -265,11 +265,11 @@ isSaving = true;
       const content = document.querySelector('#content').value.trim();
       const file = imageFile.files[0];
 
-      if (!title || !content) {
-        alert('Tafadhali jaza kichwa na maudhui ya habari.');
-        return;
-      }
-
+    if (!title || !content) {
+  alert('Tafadhali jaza kichwa na maudhui ya habari.');
+  isSaving = false;
+  return;
+}
       publishButton.disabled = true;
       publishButton.textContent = '⏳ Inapakia...';
 
@@ -526,6 +526,7 @@ async function deletePost(id) {
  console.log('LOAD POSTS INAITWA');
 loadPostsForEdit();
 }
+    loadPostsForEdit();
   </script>
 
   
