@@ -499,9 +499,9 @@ console.log('POSTS LIST:', postsList);
         <hr style="margin:20px 0;">
 
     </div>
-    `;
+    
 
-}).join('');
+).join('');
       }
     
 async function editPost(id) {
@@ -617,7 +617,7 @@ loadPostsForEdit();
           <p>${post.content || ''}</p>
         </div>
       `).join('');
-    });
+    }
 const searchButton = document.querySelector('#search-button');
 
 searchButton.addEventListener('click', function () {
