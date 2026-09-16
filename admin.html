@@ -614,10 +614,10 @@ loadPostsForEdit();
 
           <p>${post.content || ''}</p>
         </div>
-      `).join('');
-    }
-const searchButton = document.querySelector('#search-button');
+           `).join('');
+    });
 
+const searchButton = document.querySelector('#search-button');
 searchButton.addEventListener('click', function () {
   searchInput.dispatchEvent(new Event('input'));
 });
