@@ -492,10 +492,14 @@ console.log('POSTS LIST:', postsList);
     cursor:pointer;
   "
 >
-  🗑️ Futa
-</button>
-    </div>
-  `).join('');
+  
+          🗑️ Futa
+      </button>
+
+      <hr style="margin:20px 0;">
+    `;
+
+      }).join('');
 }
 async function editPost(id) {
 editingPostId = id;
@@ -555,7 +559,7 @@ async function deletePost(id) {
  console.log('LOAD POSTS INAITWA');
 loadPostsForEdit();
 }
-      loadPostsForEdit();
+  
 
     const searchInput = document.querySelector('#search-input');
     const searchResults = document.querySelector('#search-results');
