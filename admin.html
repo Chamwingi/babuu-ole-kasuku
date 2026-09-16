@@ -502,6 +502,8 @@ console.log('POSTS LIST:', postsList);
     `;
 
 }).join('');
+      }
+    
 async function editPost(id) {
 editingPostId = id;
   const { data, error } = await supabaseClient
@@ -622,6 +624,6 @@ searchButton.addEventListener('click', function () {
   searchInput.dispatchEvent(new Event('input'));
 });
   
-
+<script>
 </body>
 </html>
