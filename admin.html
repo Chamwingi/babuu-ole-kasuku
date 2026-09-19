@@ -394,10 +394,10 @@ editingPostId = null;
         imagePreview.src = '';
         imagePreview.style.display = 'none';
 
-        console.log('Habari imehifadhiwa:', data);
+     console.log('Habari imehifadhiwa:', data);
+loadPostsForEdit();
 
-      } catch (error) {
-
+} catch (error) {
         console.error('Hitilafu:', error);
         alert(error.message);
 
