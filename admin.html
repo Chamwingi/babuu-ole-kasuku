@@ -352,7 +352,7 @@ if (editingPostId) {
   if (file) {
     updateData.image_url = image_url;
   }
-
+console.log('EDITING POST ID:', editingPostId);
   const result = await supabaseClient
     .from('posts')
     .update(updateData)
