@@ -184,7 +184,7 @@
     <p>DASHBOARD YA USIMAMIZI</p>
   </header>
 
-  <main class="dashboard">
+  <main class="dashboard" id="admin-dashboard" style="display:none;">
 
     <div class="welcome">
       <h2>Karibu kwenye Dashboard</h2>
@@ -301,7 +301,48 @@
       SUPABASE_URL,
       SUPABASE_KEY
     );
+const loginButton = document.querySelector('#login-button');
+const loginMessage = document.querySelector('#login-message');
+const loginSection = document.querySelector('#login-section');
+const adminDashboard = document.querySelector('#admin-dashboard');
 
+loginButton.addEventListener('click', async function () {
+
+  const email = document.querySelector('#login-email').value.trim();
+  const password = document.querySelector('#login-password').value;
+
+  if (!email || !password) {
+    loginMessage.textContent = 'Tafadhali jaza email na password.';
+    loginMessage.style.color = 'red';
+    return;
+  }
+
+  loginButton.disabled = true;
+  loginButton.textContent = '⏳ Inaingia...';
+
+  const { data, error } = await supabaseClient.auth.signInWithPassword({
+    email: email,
+    password: password
+  });
+
+  if (error) {
+    console.error('Login error:', error);
+    loginMessage.textContent = 'Email au password si sahihi.';
+    loginMessage.style.color = 'red';
+
+    loginButton.disabled = false;
+    loginButton.textContent = '🔐 INGIA';
+    return;
+  }
+
+  loginMessage.textContent = 'Umefanikiwa kuingia.';
+  loginMessage.style.color = 'green';
+
+  loginSection.style.display = 'none';
+  adminDashboard.style.display = 'block';
+
+  console.log('Admin ameingia:', data.user.email);
+});
    const publishButton = document.querySelector('.publish');
 let editingPostId = null;
 let isSaving = false;
@@ -671,7 +712,7 @@ const searchButton = document.querySelector('#search-button');
 searchButton.addEventListener('click', function () {
   searchInput.dispatchEvent(new Event('input'));
 });
-  loadPostsForEdit();
+ 
 </script>
 </body>
 </html>
