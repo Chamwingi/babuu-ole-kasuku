@@ -348,7 +348,43 @@ let editingPostId = null;
 let isSaving = false;
     const imageFile = document.querySelector('#image_file');
     const imagePreview = document.querySelector('#image_preview');
+imageFile.addEventListener('change', function () {
+  const files = imageFile.files;
 
+  imagePreview.innerHTML = '';
+
+  if (!files || files.length === 0) {
+    return;
+  }
+
+  for (const file of files) {
+
+    if (!file.type.startsWith('image/')) {
+      alert('Tafadhali chagua faili za picha tu.');
+      imageFile.value = '';
+      imagePreview.innerHTML = '';
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function (event) {
+      const img = document.createElement('img');
+
+      img.src = event.target.result;
+      img.alt = 'Muonekano wa picha';
+      img.style.width = '150px';
+      img.style.height = '100px';
+      img.style.objectFit = 'cover';
+      img.style.margin = '5px';
+      img.style.borderRadius = '8px';
+
+      imagePreview.appendChild(img);
+    };
+
+    reader.readAsDataURL(file);
+  }
+});
   
     publishButton.addEventListener('click', async function () {
 if (isSaving) {
