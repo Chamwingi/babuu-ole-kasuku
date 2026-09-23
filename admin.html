@@ -350,7 +350,7 @@ let isSaving = false;
     const imagePreview = document.querySelector('#image_preview');
 imageFile.addEventListener('change', function () {
   const files = imageFile.files;
-
+console.log("IDADI YA PICHA:", files.length);
   imagePreview.innerHTML = '';
 
   if (!files || files.length === 0) {
