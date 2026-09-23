@@ -522,9 +522,9 @@
             style="width:100%; border-radius:10px; margin-bottom:15px;">
         ` : ''}
 
-        <p>
-          ${post.content || ''}
-        </p>
+       <p>
+  ${(post.content || '').replace(/\n/g, '<br>')}
+</p>
 
         <p>
           <strong>Kategoria:</strong>
