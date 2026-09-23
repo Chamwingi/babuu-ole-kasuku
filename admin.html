@@ -395,7 +395,7 @@ isSaving = true;
       const title = document.querySelector('#title').value.trim();
       const category = document.querySelector('#category').value;
       const content = document.querySelector('#content').value.trim();
-      const file = imageFile.files[0];
+     const files = imageFile.files;
 
     if (!title || !content) {
   alert('Tafadhali jaza kichwa na maudhui ya habari.');
