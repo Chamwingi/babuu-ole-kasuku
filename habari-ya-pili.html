@@ -99,12 +99,20 @@
 <nav>
   <a href="index.html" data-i18n="home">🏠 Nyumbani</a>
   <a href="habari.html" data-i18n="news">📰 Habari</a>
+</nav>
 
-  <select id="languageSelector" onchange="changeLanguage(this.value)" style="margin-left:10px; padding:6px; border-radius:5px;">
+<div class="language-box">
+
+  <label for="languageSelector" data-i18n="languageLabel">
+    Chagua lugha
+  </label>
+
+  <select id="languageSelector" onchange="changeLanguage(this.value)">
     <option value="sw">Kiswahili</option>
     <option value="en">English</option>
   </select>
-</nav>
+
+</div>
 ```
 
   <div class="container">
