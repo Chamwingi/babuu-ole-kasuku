@@ -338,8 +338,10 @@ loginButton.addEventListener('click', async function () {
   loginMessage.textContent = 'Umefanikiwa kuingia.';
   loginMessage.style.color = 'green';
 
-  loginSection.style.display = 'none';
+   loginSection.style.display = 'none';
   adminDashboard.style.display = 'block';
+
+  loadPostsForEdit();
 
   console.log('Admin ameingia:', data.user.email);
 });
