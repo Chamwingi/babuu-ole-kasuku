@@ -130,7 +130,16 @@ document.addEventListener("DOMContentLoaded", function () {
   } else {
     changeLanguage("sw");
   }
-    document.documentElement.style.visibility = "visible";
+
+  const selector = document.getElementById("languageSelector");
+
+  if (selector) {
+    selector.addEventListener("change", function () {
+      changeLanguage(this.value);
+    });
+  }
+
+  document.documentElement.style.visibility = "visible";
 });
 ```
 
