@@ -94,12 +94,24 @@
     <h2>BABUU OLE KASUKU</h2>
     <p>Habari na Maudhui</p>
   </header>
+<nav>
+  <a href="index.html" data-i18n="home">🏠 Nyumbani</a>
+  <a href="habari.html" data-i18n="news">📰 Habari</a>
+</nav>
 
-  <nav>
-    <a href="index.html">Nyumbani</a>
-    <a href="habari.html">Habari</a>
-  </nav>
+<div class="language-box">
 
+  <label for="languageSelector" data-i18n="languageLabel">
+    Chagua lugha
+  </label>
+
+  <select id="languageSelector" onchange="changeLanguage(this.value)">
+    <option value="sw">Kiswahili</option>
+    <option value="en">English</option>
+  </select>
+
+</div>
+  
   <div class="container">
 
     <h1>Makala na taarifa za jamii</h1>
@@ -151,6 +163,6 @@
     </a>
 
   </div>
-
+<script src="language.js"></script>
 </body>
 </html>
