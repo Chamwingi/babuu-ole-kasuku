@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>BABUU OLE KASUKU - Habari ya Pili</title>
-
+<script>
+  const savedLanguage = localStorage.getItem("babuuLanguage") || "sw";
+  document.documentElement.lang = savedLanguage;
+</script>
   <style>
     body {
       margin: 0;
