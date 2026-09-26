@@ -121,8 +121,15 @@ function changeLanguage(lang) {
   }
 }
 
-
+```javascript
 document.addEventListener("DOMContentLoaded", function () {
-  const savedLanguage = localStorage.getItem("babuuLanguage") || "sw";
-  changeLanguage(savedLanguage);
+  const savedLanguage = localStorage.getItem("babuuLanguage");
+
+  if (savedLanguage === "en" || savedLanguage === "sw") {
+    changeLanguage(savedLanguage);
+  } else {
+    changeLanguage("sw");
+  }
 });
+```
+
