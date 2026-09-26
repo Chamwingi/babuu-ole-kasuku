@@ -110,7 +110,7 @@
     Chagua lugha
   </label>
 
-  <select id="languageSelector" onchange="changeLanguage(this.value)">
+  <select id="languageSelector" onchange="localStorage.setItem('babuuLanguage', this.value); location.reload();">
     <option value="sw">Kiswahili</option>
     <option value="en">English</option>
   </select>
