@@ -1,4 +1,4 @@
-const translations = {
+document.documentElement.style.visibility = "hidden";
   sw: {
     home: "Nyumbani",
     news: "Habari",
@@ -130,6 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
   } else {
     changeLanguage("sw");
   }
+    document.documentElement.style.visibility = "visible";
 });
 ```
 
