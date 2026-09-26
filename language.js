@@ -1,4 +1,4 @@
-document.documentElement.style.visibility = "hidden";
+const translations = {
   sw: {
     home: "Nyumbani",
     news: "Habari",
@@ -121,7 +121,7 @@ function changeLanguage(lang) {
   }
 }
 
-```javascript
+
 document.addEventListener("DOMContentLoaded", function () {
   const savedLanguage = localStorage.getItem("babuuLanguage");
 
@@ -141,5 +141,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.documentElement.style.visibility = "visible";
 });
-```
-
