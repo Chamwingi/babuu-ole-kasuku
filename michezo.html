@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="sw">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Michezo - BABUU OLE KASUKU</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+      color: #222;
+    }
+
+    header {
+      background: #8b0000;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    nav {
+      background: #222;
+      padding: 12px;
+      text-align: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 8px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 15px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .card img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .buttons {
+      margin-top: 15px;
+    }
+
+    .share {
+      display: inline-block;
+      padding: 8px 12px;
+      margin: 5px;
+      background: #8b0000;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+    }
+
+    footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>🦜 BABUU OLE KASUKU</h1>
+    <p>⚽ Michezo</p>
+  </header>
+
+  <nav>
+    <a href="index.html">🏠 Nyumbani</a>
+    <a href="habari.html">📰 Habari</a>
+    <a href="michezo.html">⚽ Michezo</a>
+    <a href="index.html#hadithi">📖 Hadithi</a>
+    <a href="index.html#burudani">🎭 Burudani</a>
+    <a href="index.html#makala">✍️ Makala</a>
+    <a href="index.html#zawadi">🎁 Zawadi</a>
+    <a href="index.html#kuhusu">ℹ️ Kuhusu</a>
+  </nav>
+
+  <div class="container">
+
+    <h2 class="section-title">⚽ Habari za Michezo</h2>
+
+    <div id="michezo-posts">
+      <div class="card">
+        <h3>Inapakia habari za michezo...</h3>
+        <p>Tafadhali subiri kidogo.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>© 2026 BABUU OLE KASUKU</p>
+    <p>Habari • Michezo • Hadithi • Burudani • Makala • Zawadi</p>
+  </footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    const SUPABASE_URL = 'https://tykxdrucylyamvhgfjdq.supabase.co';
+
+    const SUPABASE_KEY = 'sb_publishable_IHcI_DjtdVEMuQYUXCFakw_ygboXT8I';
+
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+
+    async function loadMichezo() {
+
+      const { data, error } = await supabaseClient
+        .from('posts')
+        .select('*')
+        .eq('category', 'michezo')
+        .order('id', { ascending: false });
+
+      if (error) {
+        console.error('Supabase error:', error);
+
+        document.querySelector('#michezo-posts').innerHTML = `
+          <div class="card">
+            <h3>Hitilafu</h3>
+            <p>Habari za michezo hazikuweza kupakiwa.</p>
+          </div>
+        `;
+
+        return;
+      }
+
+      const michezoPosts = document.querySelector('#michezo-posts');
+
+      if (!data || data.length === 0) {
+
+        michezoPosts.innerHTML = `
+          <div class="card">
+            <h3>Hakuna habari za michezo bado</h3>
+            <p>Habari mpya za michezo zitaonekana hapa.</p>
+          </div>
+        `;
+
+        return;
+      }
+
+      michezoPosts.innerHTML = data.map(post => `
+
+        <div class="card">
+
+          <h3>${post.title || ''}</h3>
+
+          ${post.image_urls ? `
+            ${JSON.parse(post.image_urls).map(url => `
+              <img
+                src="${url}"
+                alt="${post.title || 'Michezo'}"
+                style="width:100%; border-radius:10px; margin-bottom:15px;">
+            `).join('')}
+          ` : post.image_url ? `
+            <img
+              src="${post.image_url}"
+              alt="${post.title || 'Michezo'}"
+              style="width:100%; border-radius:10px; margin-bottom:15px;">
+          ` : ''}
+
+          <p>
+            ${(post.content || '').replace(/\n/g, '<br>')}
+          </p>
+
+          <p>
+            <strong>Kategoria:</strong>
+            ${post.category || 'Michezo'}
+          </p>
+
+          <div class="buttons">
+
+            <a
+              class="share"
+              href="https://wa.me/?text=${encodeURIComponent(
+                post.title + ' - BABUU OLE KASUKU'
+              )}"
+              target="_blank">
+              📱 Shiriki WhatsApp
+            </a>
+
+            <a
+              class="share"
+              href="https://www.facebook.com/sharer/sharer.php?u=https://chamwingi.github.io/babuu-ole-kasuku/"
+              target="_blank">
+              🔵 Shiriki Facebook
+            </a>
+
+          </div>
+
+        </div>
+
+      `).join('');
+    }
+
+
+    loadMichezo();
+
+  </script>
+
+</body>
+</html>
