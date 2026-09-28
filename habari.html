@@ -1,116 +1,92 @@
+```html
 <!DOCTYPE html>
 <html lang="sw">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Habari - BABUU OLE KASUKU</title>
-<script>
-  document.documentElement.style.visibility = "hidden";
-</script>
+
   <style>
     body {
-      
       margin: 0;
       font-family: Arial, sans-serif;
       background: #f7f7f7;
       color: #222;
-      line-height: 1.6;
+      line-height: 1.8;
     }
 
     header {
       background: #8b0000;
       color: white;
       text-align: center;
-      padding: 25px 15px;
+      padding: 30px 20px;
     }
 
     header h1 {
       margin: 0;
-      font-size: 30px;
+    }
+
+    header p {
+      margin-top: 10px;
     }
 
     nav {
       background: #222;
-      padding: 14px 8px;
       text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 10;
+      padding: 12px;
     }
 
     nav a {
       color: white;
       text-decoration: none;
-      margin: 5px 8px;
+      margin: 0 8px;
       font-weight: bold;
-      display: inline-block;
-    }
-
-    nav a:hover {
-      color: #ffd700;
     }
 
     .container {
-      max-width: 1000px;
-      margin: auto;
-      padding: 30px 15px;
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 20px;
     }
 
-    .page-title {
-      color: #8b0000;
+    .section-title {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
     }
 
-    .news-card {
+    .card {
       background: white;
       padding: 25px;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
       border-radius: 10px;
-      box-shadow: 0 2px 10px #0002;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
 
-    .news-card h2 {
-      color: #8b0000;
+    .card h2 {
       margin-top: 0;
+      color: #8b0000;
     }
 
-    .date {
-      color: #777;
-      font-size: 14px;
+    .card img {
+      width: 100%;
+      border-radius: 10px;
       margin-bottom: 15px;
     }
 
-    .read-more {
-      display: inline-block;
-      background: #8b0000;
-      color: white;
-      padding: 10px 16px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-      margin-top: 10px;
-    }
-
-    .read-more:hover {
-      background: #b30000;
-    }
-
     .buttons {
-      margin-top: 18px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+      margin-top: 20px;
     }
 
     .share {
       display: inline-block;
-      color: white;
+      margin-right: 10px;
+      margin-bottom: 10px;
       padding: 10px 15px;
-      border-radius: 6px;
+      color: white;
       text-decoration: none;
-      font-weight: bold;
+      border-radius: 6px;
     }
 
     .whatsapp {
@@ -121,170 +97,172 @@
       background: #1877F2;
     }
 
-    .share:hover {
-      opacity: 0.85;
-    }
-
     footer {
-      background: #222;
-      color: white;
       text-align: center;
       padding: 25px;
-      margin-top: 30px;
-    }
-
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 25px;
-      }
-
-      .news-card {
-        padding: 20px;
-      }
+      background: #222;
+      color: white;
+      margin-top: 40px;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- HEADER -->
   <header>
     <h1>🦜 BABUU OLE KASUKU</h1>
-    <p>Habari • Hadithi • Burudani • Makala • Zawadi</p>
+    <p>📰 Habari Mchanganyiko</p>
   </header>
 
-```html
-  <!-- MENU -->
   <nav>
-    <a href="index.html" data-i18n="home">🏠 Nyumbani</a>
-    <a href="habari.html" data-i18n="news">📰 Habari</a>
-    <a href="index.html#hadithi" data-i18n="stories">📖 Hadithi</a>
-    <a href="index.html#burudani" data-i18n="entertainment">🎭 Burudani</a>
-    <a href="index.html#makala" data-i18n="articles">✍️ Makala</a>
-    <a href="index.html#zawadi" data-i18n="gifts">🎁 Zawadi</a>
-    <a href="index.html#kuhusu" data-i18n="about">ℹ️ Kuhusu</a>
-
-    <select id="languageSelector" style="margin-left:10px; padding:6px; border-radius:5px;">
-      <option value="sw">Kiswahili</option>
-      <option value="en">English</option>
-    </select>
+    <a href="index.html">🏠 Nyumbani</a>
+    <a href="habari.html">📰 Habari</a>
+    <a href="michezo.html">⚽ Michezo</a>
+    <a href="hadithi.html">📖 Hadithi</a>
+    <a href="index.html#burudani">🎭 Burudani</a>
+    <a href="makala.html">✍️ Makala</a>
+    <a href="index.html#zawadi">🎁 Zawadi</a>
+    <a href="index.html#kuhusu">ℹ️ Kuhusu</a>
   </nav>
-```
 
-
-
-
-  <!-- HABARI -->
   <div class="container">
 
-    <h2 class="page-title">📰 Habari Mchanganyiko</h2>
+    <h2 class="section-title">📰 Habari Mchanganyiko</h2>
 
+    <div id="habari-posts">
 
-    <!-- HABARI YA KWANZA -->
-    <article class="news-card">
-
-      <h2>Karibu kwenye Habari za BABUU OLE KASUKU</h2>
-
-      <div class="date">
-        📅 Septemba 1, 2026
+      <div class="card">
+        <h3>Inapakia habari...</h3>
+        <p>Tafadhali subiri kidogo.</p>
       </div>
 
-      <p>
-        Karibu katika sehemu ya habari ya BABUU OLE KASUKU.
-        Hapa tutakuwa tukikuletea habari, taarifa na matukio
-        mbalimbali kutoka katika jamii na maeneo tofauti.
-      </p>
-
-      <p>
-        Lengo letu ni kukuletea maudhui yenye kuvutia,
-        kuelimisha na kukupa taarifa muhimu kwa wakati.
-      </p>
-
-      <a  class="read-more" href="habari-ya-kwanza.html">
-        Soma zaidi
-      </a>
-
-
-      <div class="buttons">
-
-        <a
-          class="share whatsapp"
-          href="https://wa.me/?text=Soma%20habari%20kwenye%20BABUU%20OLE%20KASUKU"
-          target="_blank">
-          📱 Shiriki WhatsApp
-        </a>
-
-        <a
-          class="share facebook"
-          href="https://www.facebook.com/sharer/sharer.php?u=https://chamwingi.github.io/babuu-ole-kasuku/habari.html"
-          target="_blank">
-          🔵 Shiriki Facebook
-        </a>
-
-      </div>
-
-    </article>
-
-
-    <!-- HABARI YA PILI -->
-    <article class="news-card">
-
-      <h2>Habari mbalimbali zitaonekana hapa</h2>
-
-      <div class="date">
-        📅 Taarifa mpya
-      </div>
-
-      <p>
-        Sehemu hii itatumika kuweka habari mpya za BABUU OLE KASUKU.
-        Kila habari mpya itaongezwa kama makala inayoweza kusomwa
-        na kushirikishwa na wasomaji.
-      </p>
-
-      <a class="read-more" href="habari-ya-pili.html">
-        Soma zaidi
-      </a>
-
-    </article>
-
-
-    <!-- HABARI YA TATU -->
-    <article class="news-card">
-
-      <h2>Makala na taarifa za jamii</h2>
-
-      <div class="date">
-        📅 Habari za jamii
-      </div>
-
-      <p>
-        Hapa tutaweka habari zinazohusu jamii, maisha,
-        elimu, maendeleo na mambo mbalimbali yanayowagusa
-        wasomaji wetu.
-      </p>
-
-    <a class="read-more" href="habari-ya-tatu.html">
-  Soma zaidi
-</a>
-    </article>
+    </div>
 
   </div>
 
-
-  <!-- FOOTER -->
   <footer>
-
     <p>© 2026 BABUU OLE KASUKU</p>
-
-    <p>
-      Habari • Hadithi • Burudani • Makala • Zawadi
-    </p>
-
+    <p>Habari • Michezo • Hadithi • Burudani • Makala • Zawadi</p>
   </footer>
 
-<script src="language.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+
+    const SUPABASE_URL = 'https://tykxdrucylyamvhgfjdq.supabase.co';
+
+    const SUPABASE_KEY = 'sb_publishable_IHcI_DjtdVEMuQYUXCFakw_ygboXT8I';
+
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
 
 
+    async function loadHabari() {
+
+      const { data, error } = await supabaseClient
+        .from('posts')
+        .select('*')
+        .eq('category', 'habari')
+        .order('id', { ascending: false });
+
+
+      if (error) {
+
+        console.error('Supabase error:', error);
+
+        document.querySelector('#habari-posts').innerHTML = `
+          <div class="card">
+            <h3>Hitilafu</h3>
+            <p>Habari hazikuweza kupakiwa.</p>
+          </div>
+        `;
+
+        return;
+      }
+
+
+      const habariPosts = document.querySelector('#habari-posts');
+
+
+      if (!data || data.length === 0) {
+
+        habariPosts.innerHTML = `
+          <div class="card">
+            <h3>Hakuna habari bado</h3>
+            <p>Habari mpya zitaonekana hapa.</p>
+          </div>
+        `;
+
+        return;
+      }
+
+
+      habariPosts.innerHTML = data.map(post => `
+
+        <div class="card">
+
+          <h2>${post.title || ''}</h2>
+
+
+          ${post.image_urls ? `
+            ${JSON.parse(post.image_urls).map(url => `
+              <img
+                src="${url}"
+                alt="${post.title || 'Habari'}">
+            `).join('')}
+          ` : post.image_url ? `
+            <img
+              src="${post.image_url}"
+              alt="${post.title || 'Habari'}">
+          ` : ''}
+
+
+          <p>
+            ${(post.content || '').replace(/\n/g, '<br>')}
+          </p>
+
+
+          <p>
+            <strong>Kategoria:</strong>
+            ${post.category || 'Habari'}
+          </p>
+
+
+          <div class="buttons">
+
+            <a
+              class="share whatsapp"
+              href="https://wa.me/?text=${encodeURIComponent(
+                post.title + ' - BABUU OLE KASUKU'
+              )}"
+              target="_blank">
+              📱 Shiriki WhatsApp
+            </a>
+
+
+            <a
+              class="share facebook"
+              href="https://www.facebook.com/sharer/sharer.php?u=https://chamwingi.github.io/babuu-ole-kasuku/habari.html"
+              target="_blank">
+              🔵 Shiriki Facebook
+            </a>
+
+          </div>
+
+        </div>
+
+      `).join('');
+
+    }
+
+
+    loadHabari();
+
+  </script>
 
 </body>
 </html>
+```
