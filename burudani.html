@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="sw">
 
@@ -13,52 +14,95 @@
       font-family: Arial, sans-serif;
       background: #f7f7f7;
       color: #222;
+      line-height: 1.8;
     }
 
     header {
-      background: #111;
+      background: #8b0000;
       color: white;
-      padding: 20px;
       text-align: center;
+      padding: 30px 20px;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    header p {
+      margin-top: 10px;
+    }
+
+    nav {
+      background: #222;
+      text-align: center;
+      padding: 12px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 8px;
+      font-weight: bold;
     }
 
     .container {
       max-width: 900px;
       margin: 30px auto;
-      padding: 20px;
+      padding: 0 20px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 25px;
     }
 
     .card {
       background: white;
       padding: 25px;
+      margin-bottom: 20px;
       border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
 
-    h1 {
-      margin: 0;
-    }
-
-    h2 {
+    .card h2 {
       margin-top: 0;
+      color: #8b0000;
     }
 
-    .back {
-      display: inline-block;
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .buttons {
       margin-top: 20px;
-      padding: 10px 18px;
-      background: #111;
+    }
+
+    .share {
+      display: inline-block;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      padding: 10px 15px;
       color: white;
       text-decoration: none;
       border-radius: 6px;
     }
 
+    .whatsapp {
+      background: #25D366;
+    }
+
+    .facebook {
+      background: #1877F2;
+    }
+
     footer {
-      margin-top: 40px;
-      padding: 20px;
       text-align: center;
-      background: #111;
+      padding: 25px;
+      background: #222;
       color: white;
+      margin-top: 40px;
     }
   </style>
 </head>
@@ -66,83 +110,31 @@
 <body>
 
   <header>
-    <h1>🎭 BABUU OLE KASUKU</h1>
-    <p>Burudani na Vichekesho</p>
+    <h1>🦜 BABUU OLE KASUKU</h1>
+    <p>🎭 Burudani</p>
   </header>
+
+  <nav>
+    <a href="index.html">🏠 Nyumbani</a>
+    <a href="habari.html">📰 Habari</a>
+    <a href="michezo.html">⚽ Michezo</a>
+    <a href="hadithi.html">📖 Hadithi</a>
+    <a href="burudani.html">🎭 Burudani</a>
+    <a href="makala.html">✍️ Makala</a>
+    <a href="index.html#zawadi">🎁 Zawadi</a>
+    <a href="index.html#kuhusu">ℹ️ Kuhusu</a>
+  </nav>
 
   <div class="container">
 
-    <div class="card">
+    <h2 class="section-title">🎭 Burudani Zetu</h2>
 
-      <h2>😂 Burudani</h2>
+    <div id="burudani-posts">
 
-      <p>
-        Karibu kwenye sehemu ya Burudani ya
-        BABUU OLE KASUKU.
-      </p>
-       <p>
-  Hapa tutaweka vichekesho, habari za burudani,
-  sanaa, mambo ya kuvutia na maudhui mbalimbali
-  kwa ajili ya kuwaburudisha wasomaji wetu.
-</p>
-     
-      
-<h2>😂 KITI KIDOGO</h2>
-
-<p>
-  Juma alifika nyumbani kwa rafiki yake akiwa amechoka sana.
-  Alipoingia sebuleni, alimkuta rafiki yake amekaa kwenye kiti
-  kidogo sana.
-</p>
-
-<p>
-  Juma akamuuliza:
-</p>
-
-<p>
-  — Wewe mbona umekaa kwenye kiti cha mtoto?
-</p>
-
-<p>
-  Rafiki yake akajibu:
-</p>
-
-<p>
-  — Hiki si kiti cha mtoto. Ni kiti changu!
-</p>
-
-<p>
-  Juma akacheka na kumuuliza:
-</p>
-
-<p>
-  — Basi kwa nini miguu yako iko nje?
-</p>
-
-<p>
-  Rafiki yake akasema:
-</p>
-
-<p>
-  — Miguu iko nje kwa sababu kiti kimejaa!
-</p>
-
-<p>
-  Juma akacheka sana, akamwambia:
-</p>
-
-<p>
-  — Basi kesho nunua kiti kikubwa, kabla hujanunua nyumba kubwa
-  ya kukalia kiti kidogo! 😂
-</p>
-
-<p><strong>MWISHO</strong></p>
-
-
-      
-      <a href="index.html" class="back">
-        ← Rudi Nyumbani
-      </a>
+      <div class="card">
+        <h3>Inapakia burudani...</h3>
+        <p>Tafadhali subiri kidogo.</p>
+      </div>
 
     </div>
 
@@ -150,8 +142,127 @@
 
   <footer>
     <p>© 2026 BABUU OLE KASUKU</p>
+    <p>Habari • Michezo • Hadithi • Burudani • Makala • Zawadi</p>
   </footer>
 
-</body>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+
+    const SUPABASE_URL = 'https://tykxdrucylyamvhgfjdq.supabase.co';
+
+    const SUPABASE_KEY = 'sb_publishable_IHcI_DjtdVEMuQYUXCFakw_ygboXT8I';
+
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+
+    async function loadBurudani() {
+
+      const { data, error } = await supabaseClient
+        .from('posts')
+        .select('*')
+        .eq('category', 'burudani')
+        .order('id', { ascending: false });
+
+
+      if (error) {
+
+        console.error('Supabase error:', error);
+
+        document.querySelector('#burudani-posts').innerHTML = `
+          <div class="card">
+            <h3>Hitilafu</h3>
+            <p>Burudani hazikuweza kupakiwa.</p>
+          </div>
+        `;
+
+        return;
+      }
+
+
+      const burudaniPosts = document.querySelector('#burudani-posts');
+
+
+      if (!data || data.length === 0) {
+
+        burudaniPosts.innerHTML = `
+          <div class="card">
+            <h3>Hakuna burudani bado</h3>
+            <p>Burudani mpya zitaonekana hapa.</p>
+          </div>
+        `;
+
+        return;
+      }
+
+
+      burudaniPosts.innerHTML = data.map(post => `
+
+        <div class="card">
+
+          <h2>${post.title || ''}</h2>
+
+
+          ${post.image_urls ? `
+            ${JSON.parse(post.image_urls).map(url => `
+              <img
+                src="${url}"
+                alt="${post.title || 'Burudani'}">
+            `).join('')}
+          ` : post.image_url ? `
+            <img
+              src="${post.image_url}"
+              alt="${post.title || 'Burudani'}">
+          ` : ''}
+
+
+          <p>
+            ${(post.content || '').replace(/\n/g, '<br>')}
+          </p>
+
+
+          <p>
+            <strong>Kategoria:</strong>
+            ${post.category || 'Burudani'}
+          </p>
+
+
+          <div class="buttons">
+
+            <a
+              class="share whatsapp"
+              href="https://wa.me/?text=${encodeURIComponent(
+                post.title + ' - BABUU OLE KASUKU'
+              )}"
+              target="_blank">
+              📱 Shiriki WhatsApp
+            </a>
+
+
+            <a
+              class="share facebook"
+              href="https://www.facebook.com/sharer/sharer.php?u=https://chamwingi.github.io/babuu-ole-kasuku/burudani.html"
+              target="_blank">
+              🔵 Shiriki Facebook
+            </a>
+
+          </div>
+
+        </div>
+
+      `).join('');
+
+    }
+
+
+    loadBurudani();
+
+  </script>
+
+</body>
 </html>
+```
