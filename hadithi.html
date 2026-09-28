@@ -1,0 +1,259 @@
+```html
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Hadithi - BABUU OLE KASUKU</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+      color: #222;
+      line-height: 1.8;
+    }
+
+    header {
+      background: #8b0000;
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    header p {
+      margin-top: 10px;
+    }
+
+    nav {
+      background: #222;
+      text-align: center;
+      padding: 12px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 8px;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .card h2 {
+      margin-top: 0;
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .buttons {
+      margin-top: 20px;
+    }
+
+    .share {
+      display: inline-block;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      padding: 10px 15px;
+      background: #8b0000;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      background: #222;
+      color: white;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>🦜 BABUU OLE KASUKU</h1>
+    <p>📖 Hadithi</p>
+  </header>
+
+  <nav>
+    <a href="index.html">🏠 Nyumbani</a>
+    <a href="habari.html">📰 Habari</a>
+    <a href="michezo.html">⚽ Michezo</a>
+    <a href="hadithi.html">📖 Hadithi</a>
+    <a href="index.html#burudani">🎭 Burudani</a>
+    <a href="index.html#makala">✍️ Makala</a>
+    <a href="index.html#zawadi">🎁 Zawadi</a>
+    <a href="index.html#kuhusu">ℹ️ Kuhusu</a>
+  </nav>
+
+  <div class="container">
+
+    <h2 class="section-title">📖 Hadithi Zetu</h2>
+
+    <div id="hadithi-posts">
+
+      <div class="card">
+        <h3>Inapakia hadithi...</h3>
+        <p>Tafadhali subiri kidogo.</p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <footer>
+    <p>© 2026 BABUU OLE KASUKU</p>
+    <p>Habari • Michezo • Hadithi • Burudani • Makala • Zawadi</p>
+  </footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+
+    const SUPABASE_URL = 'https://tykxdrucylyamvhgfjdq.supabase.co';
+
+    const SUPABASE_KEY = 'sb_publishable_IHcI_DjtdVEMuQYUXCFakw_ygboXT8I';
+
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+
+    async function loadHadithi() {
+
+      const { data, error } = await supabaseClient
+        .from('posts')
+        .select('*')
+        .eq('category', 'hadithi')
+        .order('id', { ascending: false });
+
+
+      if (error) {
+
+        console.error('Supabase error:', error);
+
+        document.querySelector('#hadithi-posts').innerHTML = `
+          <div class="card">
+            <h3>Hitilafu</h3>
+            <p>Hadithi hazikuweza kupakiwa.</p>
+          </div>
+        `;
+
+        return;
+      }
+
+
+      const hadithiPosts = document.querySelector('#hadithi-posts');
+
+
+      if (!data || data.length === 0) {
+
+        hadithiPosts.innerHTML = `
+          <div class="card">
+            <h3>Hakuna hadithi bado</h3>
+            <p>Hadithi mpya zitaonekana hapa.</p>
+          </div>
+        `;
+
+        return;
+      }
+
+
+      hadithiPosts.innerHTML = data.map(post => `
+
+        <div class="card">
+
+          <h2>${post.title || ''}</h2>
+
+
+          ${post.image_urls ? `
+            ${JSON.parse(post.image_urls).map(url => `
+              <img
+                src="${url}"
+                alt="${post.title || 'Hadithi'}">
+            `).join('')}
+          ` : post.image_url ? `
+            <img
+              src="${post.image_url}"
+              alt="${post.title || 'Hadithi'}">
+          ` : ''}
+
+
+          <p>
+            ${(post.content || '').replace(/\n/g, '<br>')}
+          </p>
+
+
+          <p>
+            <strong>Kategoria:</strong>
+            ${post.category || 'Hadithi'}
+          </p>
+
+
+          <div class="buttons">
+
+            <a
+              class="share"
+              href="https://wa.me/?text=${encodeURIComponent(
+                post.title + ' - BABUU OLE KASUKU'
+              )}"
+              target="_blank">
+              📱 Shiriki WhatsApp
+            </a>
+
+
+            <a
+              class="share"
+              href="https://www.facebook.com/sharer/sharer.php?u=https://chamwingi.github.io/babuu-ole-kasuku/"
+              target="_blank">
+              🔵 Shiriki Facebook
+            </a>
+
+          </div>
+
+        </div>
+
+      `).join('');
+
+    }
+
+
+    loadHadithi();
+
+  </script>
+
+</body>
+</html>
+```
