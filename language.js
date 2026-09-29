@@ -143,8 +143,12 @@ document.addEventListener("DOMContentLoaded", function () {
     selector.value = initialLanguage;
 
     selector.addEventListener("change", function () {
-      changeLanguage(this.value);
-    });
+  changeLanguage(this.value);
+
+  if (typeof loadPosts === "function") {
+    loadPosts();
+  }
+});
   }
 
   document.documentElement.style.visibility = "visible";
