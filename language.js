@@ -121,22 +121,19 @@ function changeLanguage(lang) {
   }
 
   document.documentElement.lang = lang;
-
-  document.documentElement.style.visibility = "visible";
 }
 
 
-const savedLanguage = localStorage.getItem("babuuLanguage");
-
-const initialLanguage =
-  savedLanguage === "en" || savedLanguage === "sw"
-    ? savedLanguage
-    : "sw";
-
-changeLanguage(initialLanguage);
-
-
 document.addEventListener("DOMContentLoaded", function () {
+
+  const savedLanguage = localStorage.getItem("babuuLanguage");
+
+  const initialLanguage =
+    savedLanguage === "en" || savedLanguage === "sw"
+      ? savedLanguage
+      : "sw";
+
+  changeLanguage(initialLanguage);
 
   const selector = document.getElementById("languageSelector");
 
@@ -147,5 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
       changeLanguage(this.value);
     });
   }
+
+  document.documentElement.style.visibility = "visible";
 
 });
