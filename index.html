@@ -193,7 +193,15 @@
     }
   </style>
  
+<script>
+  const savedLanguage = localStorage.getItem("babuuLanguage");
 
+  if (savedLanguage === "en" || savedLanguage === "sw") {
+    document.documentElement.setAttribute("data-language", savedLanguage);
+  } else {
+    document.documentElement.setAttribute("data-language", "sw");
+  }
+</script>
 <script src="language.js"></script>
 </head>
 
