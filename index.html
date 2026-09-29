@@ -192,6 +192,19 @@
       }
     }
   </style>
+  <script>
+  const savedLanguage = localStorage.getItem("babuuLanguage");
+
+  if (savedLanguage === "en" || savedLanguage === "sw") {
+    document.documentElement.setAttribute("data-language", savedLanguage);
+  } else {
+    document.documentElement.setAttribute("data-language", "sw");
+  }
+
+  document.documentElement.style.visibility = "hidden";
+</script>
+
+<script src="language.js"></script>
 </head>
 
 <body>
@@ -469,7 +482,7 @@
 
 
   <!-- LANGUAGE SCRIPT -->
-  <script src="language.js"></script>
+  
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
   const SUPABASE_URL = 'https://tykxdrucylyamvhgfjdq.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_IHcI_DjtdVEMuQYUXCFakw_ygboXT8I';
