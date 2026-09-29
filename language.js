@@ -46,9 +46,9 @@ const translations = {
 
     footer: "Habari • Hadithi • Burudani • Makala • Zawadi",
 
-    languageLabel: "Chagua lugha",
-category: "Kategoria"
-    headerSubtitle: "Habari • Hadithi • Burudani • Makala • Zawadi",
+  languageLabel: "Chagua lugha",
+category: "Kategoria",
+headerSubtitle: "Habari • Hadithi • Burudani • Makala • Zawadi",
 readMore: "Soma zaidi →",
 variousNewsTitle: "Habari mbalimbali",
 variousNewsText: "Hapa tutaweka taarifa na habari mbalimbali kutoka katika maeneo na nyanja tofauti.",
@@ -104,9 +104,9 @@ sports: "Michezo"
 
     footer: "News • Stories • Entertainment • Articles • Gifts",
 
-    languageLabel: "Choose language",
-category: "Category"
-    headerSubtitle: "News • Stories • Entertainment • Articles • Gifts",
+   languageLabel: "Choose language",
+category: "Category",
+headerSubtitle: "News • Stories • Entertainment • Articles • Gifts",
 readMore: "Read more →",
 variousNewsTitle: "Various News",
 variousNewsText: "Here we will publish various information and news from different areas and fields.",
