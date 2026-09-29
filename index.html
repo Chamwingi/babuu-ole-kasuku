@@ -521,7 +521,16 @@
       `;
       return;
     }
+const currentLanguage = localStorage.getItem("babuuLanguage") || "sw";
 
+const categoryText =
+  currentLanguage === "en" ? "Category:" : "Kategoria:";
+
+const whatsappText =
+  currentLanguage === "en" ? "Share on WhatsApp" : "Shiriki WhatsApp";
+
+const facebookText =
+  currentLanguage === "en" ? "Share on Facebook" : "Shiriki Facebook";
     habariSection.innerHTML = data.map(post => `
       <div class="card">
 
@@ -545,7 +554,7 @@
 </p>
 
         <p>
-          <strong data-i18n="category">Kategoria:</strong>
+          <strong>${categoryText}</strong>
           ${post.category || 'Habari'}
         </p>
 
@@ -557,14 +566,14 @@
               post.title + ' - BABUU OLE KASUKU'
             )}"
             target="_blank">
-            📱 Shiriki WhatsApp
+            📱 ${whatsappText}
           </a>
 
           <a
             class="share facebook"
             href="https://www.facebook.com/sharer/sharer.php?u=https://chamwingi.github.io/babuu-ole-kasuku/"
             target="_blank">
-            🔵 Shiriki Facebook
+            🔵 ${facebookText}
           </a>
 
         </div>
