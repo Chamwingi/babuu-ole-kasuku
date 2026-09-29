@@ -48,6 +48,13 @@ const translations = {
 
     languageLabel: "Chagua lugha",
 category: "Kategoria"
+    headerSubtitle: "Habari • Hadithi • Burudani • Makala • Zawadi",
+readMore: "Soma zaidi →",
+variousNewsTitle: "Habari mbalimbali",
+variousNewsText: "Hapa tutaweka taarifa na habari mbalimbali kutoka katika maeneo na nyanja tofauti.",
+author: "Mtunzi:",
+readStory: "Soma hadithi →",
+sports: "Michezo"
   },
 
   en: {
@@ -99,6 +106,13 @@ category: "Kategoria"
 
     languageLabel: "Choose language",
 category: "Category"
+    headerSubtitle: "News • Stories • Entertainment • Articles • Gifts",
+readMore: "Read more →",
+variousNewsTitle: "Various News",
+variousNewsText: "Here we will publish various information and news from different areas and fields.",
+author: "Author:",
+readStory: "Read story →",
+sports: "Sports"
   }
 };
 
