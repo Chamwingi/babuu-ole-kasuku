@@ -119,25 +119,33 @@ function changeLanguage(lang) {
   if (selector) {
     selector.value = lang;
   }
+
+  document.documentElement.lang = lang;
+
+  document.documentElement.style.visibility = "visible";
 }
 
 
-document.addEventListener("DOMContentLoaded", function () {
-  const savedLanguage = localStorage.getItem("babuuLanguage");
+const savedLanguage = localStorage.getItem("babuuLanguage");
 
-  if (savedLanguage === "en" || savedLanguage === "sw") {
-    changeLanguage(savedLanguage);
-  } else {
-    changeLanguage("sw");
-  }
+const initialLanguage =
+  savedLanguage === "en" || savedLanguage === "sw"
+    ? savedLanguage
+    : "sw";
+
+changeLanguage(initialLanguage);
+
+
+document.addEventListener("DOMContentLoaded", function () {
 
   const selector = document.getElementById("languageSelector");
 
   if (selector) {
+    selector.value = initialLanguage;
+
     selector.addEventListener("change", function () {
       changeLanguage(this.value);
     });
   }
 
-  document.documentElement.style.visibility = "visible";
 });
