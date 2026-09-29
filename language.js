@@ -46,7 +46,8 @@ const translations = {
 
     footer: "Habari • Hadithi • Burudani • Makala • Zawadi",
 
-    languageLabel: "Chagua lugha"
+    languageLabel: "Chagua lugha",
+category: "Kategoria"
   },
 
   en: {
@@ -96,7 +97,8 @@ const translations = {
 
     footer: "News • Stories • Entertainment • Articles • Gifts",
 
-    languageLabel: "Choose language"
+    languageLabel: "Choose language",
+category: "Category"
   }
 };
 
