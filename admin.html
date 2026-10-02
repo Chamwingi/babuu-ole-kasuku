@@ -388,19 +388,29 @@ console.log("IDADI YA PICHA:", files.length);
     img.style.borderRadius = '8px';
     img.style.display = 'block';
 
-   const caption = document.createElement('input');
+  const captionLabel = document.createElement('div');
+
+captionLabel.textContent = 'Caption ya picha';
+captionLabel.style.fontWeight = 'bold';
+captionLabel.style.marginTop = '8px';
+captionLabel.style.marginBottom = '4px';
+
+const caption = document.createElement('input');
 
 caption.type = 'text';
-caption.placeholder = 'Caption ya picha...';
+caption.placeholder = 'Andika caption ya picha hapa...';
+caption.style.width = '150px';
+caption.style.padding = '8px';
+caption.style.boxSizing = 'border-box';
 caption.style.width = '150px';
 caption.style.marginTop = '5px';
 caption.style.padding = '8px';
 caption.style.boxSizing = 'border-box';
 
 
-    wrapper.appendChild(img);
-    wrapper.appendChild(caption);
-
+   wrapper.appendChild(img);
+wrapper.appendChild(captionLabel);
+wrapper.appendChild(caption);
     imagePreview.appendChild(wrapper);
   };
 
