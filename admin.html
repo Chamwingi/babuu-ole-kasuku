@@ -523,7 +523,8 @@ const result = await supabaseClient
       category: category,
       content: content,
       image_url: image_url,
-      image_urls: image_urls || []
+      image_urls: image_urls || [],
+      image_captions: imageCaptions
     }
   ])
   .select();
