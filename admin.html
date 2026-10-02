@@ -429,13 +429,14 @@ isSaving = true;
       publishButton.textContent = '⏳ Inapakia...';
 
       let image_url = null;
+      let imageCaptions = [];
 
       try {
 
        if (files && files.length > 0) {
 
   const imageUrls = [];
-const imageCaptions = [];
+
 
   for (const file of files) {
 
