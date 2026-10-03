@@ -420,7 +420,11 @@ wrapper.appendChild(caption);
   }
 });
   
-    publishButton.addEventListener('click', async function () {
+  publishButton.addEventListener('click', async function (event) {
+
+  console.log('!!! PUBLISH BUTTON IMEBONYEZWA !!!');
+  console.log('EVENT TARGET:', event.target);
+  console.log('EVENT CURRENT TARGET:', event.currentTarget);
 if (isSaving) {
   return;
 }
