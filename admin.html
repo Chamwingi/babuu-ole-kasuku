@@ -371,6 +371,7 @@ console.log("IDADI YA PICHA:", files.length);
   const reader = new FileReader();
 
   reader.onload = function (event) {
+    console.log('PREVIEW IMEFIKA:', file.name);
 
     const wrapper = document.createElement('div');
     wrapper.style.display = 'inline-block';
