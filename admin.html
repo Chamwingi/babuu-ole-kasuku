@@ -686,12 +686,43 @@ editingPostId = id;
   document.querySelector('#category').value = data.category || 'habari';
   document.querySelector('#content').value = data.content || '';
 
-  if (data.image_url) {
-    imagePreview.src = data.image_url;
-    imagePreview.style.display = 'block';
-  } else {
-    imagePreview.src = '';
-    imagePreview.style.display = 'none';
+   imagePreview.innerHTML = '';
+
+  if (data.image_urls) {
+    let imageUrls = data.image_urls;
+
+    if (typeof imageUrls === 'string') {
+      try {
+        imageUrls = JSON.parse(imageUrls);
+      } catch (e) {
+        imageUrls = [imageUrls];
+      }
+    }
+
+    imageUrls.forEach((url, index) => {
+      const wrapper = document.createElement('div');
+      wrapper.style.display = 'inline-block';
+      wrapper.style.verticalAlign = 'top';
+      wrapper.style.margin = '10px';
+
+      const img = document.createElement('img');
+      img.src = url;
+      img.style.width = '150px';
+      img.style.display = 'block';
+
+      const caption = document.createElement('input');
+      caption.type = 'text';
+      caption.placeholder = 'Caption ya picha...';
+      caption.style.width = '150px';
+      caption.style.marginTop = '5px';
+      caption.style.padding = '8px';
+      caption.style.boxSizing = 'border-box';
+
+      wrapper.appendChild(img);
+      wrapper.appendChild(caption);
+
+      imagePreview.appendChild(wrapper);
+    });
   }
 
   document.querySelector('#title').scrollIntoView({
