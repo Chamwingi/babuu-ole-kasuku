@@ -496,9 +496,16 @@ imageCaptions.push(captionInput ? captionInput.value.trim() : '');
 }
 
          
- let data;
+let data;
 let error;
-const updateData = {
+
+if (editingPostId) {
+
+  const updateData = {
+    title: title,
+    category: category,
+    content: content
+  };
   title: title,
   category: category,
   content: content
