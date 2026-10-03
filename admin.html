@@ -675,7 +675,8 @@ editingPostId = id;
     .select('*')
     .eq('id', id)
     .single();
-
+console.log('EDIT DATA:', data);
+console.log('IMAGE URLS:', data.image_urls);
   if (error) {
     console.error('Hitilafu ya kupata habari:', error);
     alert('Habari haikuweza kufunguliwa kwa ajili ya kuhaririwa.');
