@@ -699,7 +699,7 @@ console.log('IMAGE URLS:', data.image_urls);
         imageUrls = [imageUrls];
       }
     }
-
+console.log('KABLA YA FOREACH:', imageUrls, Array.isArray(imageUrls));
     imageUrls.forEach((url, index) => {
       console.log('NAJENGA PICHA YA EDIT:', url);
       const wrapper = document.createElement('div');
