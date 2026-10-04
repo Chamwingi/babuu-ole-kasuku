@@ -158,7 +158,8 @@
       }
 
       const michezoPosts = document.querySelector('#michezo-posts');
-
+      console.log('MICHEZO DATA:', data);
+      console.log('MICHEZO ERROR:', error);
       if (!data || data.length === 0) {
 
         michezoPosts.innerHTML = `
