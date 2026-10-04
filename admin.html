@@ -392,11 +392,22 @@ captionLabel.textContent = 'Caption ya picha';
 captionLabel.style.fontWeight = 'bold';
 captionLabel.style.marginTop = '8px';
 captionLabel.style.marginBottom = '4px';
-
 const caption = document.createElement('input');
-
 caption.type = 'text';
-caption.placeholder = 'Andika caption ya picha hapa...';
+caption.placeholder = 'Caption ya picha...';
+
+let captions = data.image_captions || [];
+
+if (typeof captions === 'string') {
+  try {
+    captions = JSON.parse(captions);
+  } catch (e) {
+    captions = [captions];
+  }
+}
+
+caption.value = captions[index] || '';
+
 caption.style.width = '150px';
 caption.style.padding = '8px';
 caption.style.boxSizing = 'border-box';
