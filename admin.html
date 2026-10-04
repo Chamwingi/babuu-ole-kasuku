@@ -396,17 +396,18 @@ const caption = document.createElement('input');
 caption.type = 'text';
 caption.placeholder = 'Caption ya picha...';
 
-let captions = data.image_captions || [];
+const caption = document.createElement('input');
+caption.type = 'text';
+caption.placeholder = 'Caption ya picha...';
 
-if (typeof captions === 'string') {
-  try {
-    captions = JSON.parse(captions);
-  } catch (e) {
-    captions = [captions];
-  }
-}
+caption.style.width = '150px';
+caption.style.padding = '8px';
+caption.style.boxSizing = 'border-box';
+caption.style.marginTop = '5px';
 
-caption.value = captions[index] || '';
+wrapper.appendChild(img);
+wrapper.appendChild(caption);
+imagePreview.appendChild(wrapper);
 
 caption.style.width = '150px';
 caption.style.padding = '8px';
