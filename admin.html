@@ -608,18 +608,38 @@ console.log('POSTS LIST:', postsList);
       background:#fafafa;
     ">
 
-      ${post.image_url ? `
-        <img
-          src="${post.image_url}"
-          style="
-            max-width:200px;
-            max-height:120px;
-            border-radius:8px;
-            display:block;
-            margin-bottom:10px;
-          "
-        >
-      ` : ''}
+     ${post.image_urls ? `
+  ${
+    (Array.isArray(post.image_urls)
+      ? post.image_urls
+      : JSON.parse(post.image_urls)
+    ).map(url => `
+      <img
+        src="${url}"
+        style="
+          width:150px;
+          height:100px;
+          object-fit:cover;
+          border-radius:8px;
+          display:inline-block;
+          margin:5px;
+        "
+      >
+    `).join('')
+  }
+` : post.image_url ? `
+  <img
+    src="${post.image_url}"
+    style="
+      width:150px;
+      height:100px;
+      object-fit:cover;
+      border-radius:8px;
+      display:inline-block;
+      margin:5px;
+    "
+  >
+` : ''}
 
       <h3>${post.title}</h3>
 
