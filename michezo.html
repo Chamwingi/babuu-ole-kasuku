@@ -178,35 +178,67 @@
 
           <h3>${post.title || ''}</h3>
 
-         ${post.image_urls ? `
-  ${JSON.parse(post.image_urls).map((url, index) => `
-    <div style="margin-bottom:20px;">
+       ```javascript
+${post.image_urls ? `
+  ${
+    (() => {
+      let imageUrls = [];
 
-      <img
-        src="${url}"
-        alt="${post.title || 'Michezo'}"
-        style="width:100%; border-radius:10px; display:block;">
-
-      ${
-        post.image_captions &&
-        JSON.parse(post.image_captions)[index]
-          ? `
-            <div style="
-              margin-top:6px;
-              font-size:14px;
-              color:#555;
-              text-align:center;
-              font-style:italic;
-            ">
-              ${JSON.parse(post.image_captions)[index]}
-            </div>
-          `
-          : ''
+      try {
+        imageUrls = JSON.parse(post.image_urls);
+      } catch (e) {
+        imageUrls = [];
       }
 
-    </div>
-  `).join('')}
+      if (!Array.isArray(imageUrls)) {
+        imageUrls = [];
+      }
+
+      let captions = [];
+
+      try {
+        captions = post.image_captions
+          ? JSON.parse(post.image_captions)
+          : [];
+      } catch (e) {
+        captions = [];
+      }
+
+      if (!Array.isArray(captions)) {
+        captions = [];
+      }
+
+      return imageUrls.map((url, index) => `
+        <div style="margin-bottom:20px;">
+
+          <img
+            src="${url}"
+            alt="${post.title || 'Michezo'}"
+            style="width:100%; border-radius:10px; display:block;">
+
+          ${
+            captions[index]
+              ? `
+                <div style="
+                  margin-top:6px;
+                  font-size:14px;
+                  color:#555;
+                  text-align:center;
+                  font-style:italic;
+                ">
+                  ${captions[index]}
+                </div>
+              `
+              : ''
+          }
+
+        </div>
+      `).join('');
+    })()
+  }
 ` : post.image_url ? `
+```
+
             <img
               src="${post.image_url}"
               alt="${post.title || 'Michezo'}"
