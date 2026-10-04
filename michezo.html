@@ -177,14 +177,35 @@
 
           <h3>${post.title || ''}</h3>
 
-          ${post.image_urls ? `
-            ${JSON.parse(post.image_urls).map(url => `
-              <img
-                src="${url}"
-                alt="${post.title || 'Michezo'}"
-                style="width:100%; border-radius:10px; margin-bottom:15px;">
-            `).join('')}
-          ` : post.image_url ? `
+         ${post.image_urls ? `
+  ${JSON.parse(post.image_urls).map((url, index) => `
+    <div style="margin-bottom:20px;">
+
+      <img
+        src="${url}"
+        alt="${post.title || 'Michezo'}"
+        style="width:100%; border-radius:10px; display:block;">
+
+      ${
+        post.image_captions &&
+        JSON.parse(post.image_captions)[index]
+          ? `
+            <div style="
+              margin-top:6px;
+              font-size:14px;
+              color:#555;
+              text-align:center;
+              font-style:italic;
+            ">
+              ${JSON.parse(post.image_captions)[index]}
+            </div>
+          `
+          : ''
+      }
+
+    </div>
+  `).join('')}
+` : post.image_url ? `
             <img
               src="${post.image_url}"
               alt="${post.title || 'Michezo'}"
