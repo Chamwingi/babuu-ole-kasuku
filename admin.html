@@ -745,14 +745,15 @@ console.log('KABLA YA FOREACH:', imageUrls, Array.isArray(imageUrls));
       img.src = url;
       img.style.width = '150px';
       img.style.display = 'block';
-
-      const caption = document.createElement('input');
-      caption.type = 'text';
-      caption.placeholder = 'Caption ya picha...';
-      caption.style.width = '150px';
-      caption.style.marginTop = '5px';
-      caption.style.padding = '8px';
-      caption.style.boxSizing = 'border-box';
+const caption = document.createElement('input');
+caption.type = 'text';
+caption.placeholder = 'Caption ya picha...';
+caption.value = data.image_captions?.[index] || '';
+caption.style.width = '150px';
+caption.style.marginTop = '5px';
+caption.style.padding = '8px';
+caption.style.boxSizing = 'border-box';
+     
 
       wrapper.appendChild(img);
       wrapper.appendChild(caption);
