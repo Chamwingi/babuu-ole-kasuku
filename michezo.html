@@ -189,31 +189,34 @@
 
       /* Soma image_urls */
 
-      if (post.image_urls) {
+    if (post.image_urls) {
 
-        try {
+  try {
 
-          imageUrls = JSON.parse(post.image_urls);
+    if (Array.isArray(post.image_urls)) {
+      imageUrls = post.image_urls;
+    } else {
+      imageUrls = JSON.parse(post.image_urls);
+    }
 
-          if (!Array.isArray(imageUrls)) {
-            imageUrls = [];
-          }
+    if (!Array.isArray(imageUrls)) {
+      imageUrls = [];
+    }
 
-        } catch (e) {
+  } catch (e) {
 
-          console.warn(
-            'image_urls si JSON sahihi:',
-            post.image_urls
-          );
+    console.warn(
+      'image_urls haikusomeka:',
+      post.image_urls
+    );
 
-          imageUrls = [];
-        }
-      }
+    imageUrls = [];
+  }
+}
 
 
-      /* Soma image_captions */
+/* Soma image_captions */
 
-     ```javascript
 if (post.image_captions) {
 
   try {
