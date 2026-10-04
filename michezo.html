@@ -172,68 +172,123 @@
         return;
       }
 
-      michezoPosts.innerHTML = data.map(post => `
+    ```javascript
+michezoPosts.innerHTML = data.map(post => {
 
-        <div class="card">
+  let imageUrls = [];
+  let captions = [];
 
-          <h3>${post.title || ''}</h3>
-
-       ```javascript
-${post.image_urls ? `
-  ${
-    (() => {
-      let imageUrls = [];
-
-      try {
-        imageUrls = JSON.parse(post.image_urls);
-      } catch (e) {
-        imageUrls = [];
-      }
+  // Soma image_urls kwa usalama
+  if (post.image_urls) {
+    try {
+      imageUrls = JSON.parse(post.image_urls);
 
       if (!Array.isArray(imageUrls)) {
         imageUrls = [];
       }
+    } catch (e) {
+      console.warn('image_urls si JSON sahihi:', post.image_urls);
+      imageUrls = [];
+    }
+  }
 
-      let captions = [];
-
-      try {
-        captions = post.image_captions
-          ? JSON.parse(post.image_captions)
-          : [];
-      } catch (e) {
-        captions = [];
-      }
+  // Soma captions kwa usalama
+  if (post.image_captions) {
+    try {
+      captions = JSON.parse(post.image_captions);
 
       if (!Array.isArray(captions)) {
         captions = [];
       }
+    } catch (e) {
+      console.warn('image_captions si JSON sahihi:', post.image_captions);
+      captions = [];
+    }
+  }
 
-      return imageUrls.map((url, index) => `
-        <div style="margin-bottom:20px;">
+  let imagesHTML = '';
 
-          <img
-            src="${url}"
-            alt="${post.title || 'Michezo'}"
-            style="width:100%; border-radius:10px; display:block;">
+  imageUrls.forEach((url, index) => {
 
-          ${
-            captions[index]
-              ? `
-                <div style="
-                  margin-top:6px;
-                  font-size:14px;
-                  color:#555;
-                  text-align:center;
-                  font-style:italic;
-                ">
-                  ${captions[index]}
-                </div>
-              `
-              : ''
-          }
+    imagesHTML += `
+      <div style="margin-bottom:20px;">
 
-        </div>
-      `).join('');
+        <img
+          src="${url}"
+          alt="${post.title || 'Michezo'}"
+          style="width:100%; border-radius:10px; display:block;">
+
+        ${
+          captions[index]
+            ? `
+              <div style="
+                margin-top:6px;
+                font-size:14px;
+                color:#555;
+                text-align:center;
+                font-style:italic;
+              ">
+                ${captions[index]}
+              </div>
+            `
+            : ''
+        }
+
+      </div>
+    `;
+  });
+
+  // Kama kuna picha ya zamani kwenye image_url
+  if (imageUrls.length === 0 && post.image_url) {
+    imagesHTML = `
+      <img
+        src="${post.image_url}"
+        alt="${post.title || 'Michezo'}"
+        style="width:100%; border-radius:10px; margin-bottom:15px;">
+    `;
+  }
+
+  return `
+    <div class="card">
+
+      <h3>${post.title || ''}</h3>
+
+      ${imagesHTML}
+
+      <p>
+        ${(post.content || '').replace(/\n/g, '<br>')}
+      </p>
+
+      <p>
+        <strong>Kategoria:</strong>
+        ${post.category || 'Michezo'}
+      </p>
+
+      <div class="buttons">
+
+        <a
+          class="share"
+          href="https://wa.me/?text=${encodeURIComponent(
+            post.title + ' - BABUU OLE KASUKU'
+          )}"
+          target="_blank">
+          📱 Shiriki WhatsApp
+        </a>
+
+        <a
+          class="share"
+          href="https://www.facebook.com/sharer/sharer.php?u=https://chamwingi.github.io/babuu-ole-kasuku/"
+          target="_blank">
+          🔵 Shiriki Facebook
+        </a>
+
+      </div>
+
+    </div>
+  `;
+}).join('');
+```
+
     })()
   }
 ` : post.image_url ? `
