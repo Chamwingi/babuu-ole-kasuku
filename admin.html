@@ -505,11 +505,12 @@ let error;
 
 if (editingPostId) {
 
-  const updateData = {
-    title: title,
-    category: category,
-    content: content
-  };
+ const updateData = {
+  title: title,
+  category: category,
+  content: content,
+  image_captions: imageCaptions
+};
  
   if (files && files.length > 0) {
     updateData.image_url = image_url;
