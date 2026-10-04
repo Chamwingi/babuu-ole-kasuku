@@ -213,26 +213,32 @@
 
       /* Soma image_captions */
 
-      if (post.image_captions) {
+     ```javascript
+if (post.image_captions) {
 
-        try {
+  try {
 
-          captions = JSON.parse(post.image_captions);
+    if (Array.isArray(post.image_captions)) {
+      captions = post.image_captions;
+    } else {
+      captions = JSON.parse(post.image_captions);
+    }
 
-          if (!Array.isArray(captions)) {
-            captions = [];
-          }
+    if (!Array.isArray(captions)) {
+      captions = [];
+    }
 
-        } catch (e) {
+  } catch (e) {
 
-          console.warn(
-            'image_captions si JSON sahihi:',
-            post.image_captions
-          );
+    console.warn(
+      'image_captions haikusomeka:',
+      post.image_captions
+    );
 
-          captions = [];
-        }
-      }
+    captions = [];
+  }
+}
+```
 
 
       /* Tengeneza HTML ya picha */
