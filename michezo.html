@@ -125,180 +125,175 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <script>
-    const SUPABASE_URL = 'https://tykxdrucylyamvhgfjdq.supabase.co';
+ ```html
+<script>
+  const SUPABASE_URL = 'https://tykxdrucylyamvhgfjdq.supabase.co';
 
-    const SUPABASE_KEY = 'sb_publishable_IHcI_DjtdVEMuQYUXCFakw_ygboXT8I';
+  const SUPABASE_KEY = 'sb_publishable_IHcI_DjtdVEMuQYUXCFakw_ygboXT8I';
 
-    const supabaseClient = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
+  const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
 
-    async function loadMichezo() {
+  async function loadMichezo() {
 
-      const { data, error } = await supabaseClient
-        .from('posts')
-        .select('*')
-        .eq('category', 'michezo')
-        .order('id', { ascending: false });
+    const { data, error } = await supabaseClient
+      .from('posts')
+      .select('*')
+      .eq('category', 'michezo')
+      .order('id', { ascending: false });
 
-      if (error) {
-        console.error('Supabase error:', error);
 
-        document.querySelector('#michezo-posts').innerHTML = `
-          <div class="card">
-            <h3>Hitilafu</h3>
-            <p>Habari za michezo hazikuweza kupakiwa.</p>
-          </div>
-        `;
+    if (error) {
 
-        return;
-      }
+      console.error('Supabase error:', error);
 
-      const michezoPosts = document.querySelector('#michezo-posts');
-      console.log('MICHEZO DATA:', data);
-      console.log('MICHEZO ERROR:', error);
-      if (!data || data.length === 0) {
+      document.querySelector('#michezo-posts').innerHTML = `
+        <div class="card">
+          <h3>Hitilafu</h3>
+          <p>Habari za michezo hazikuweza kupakiwa.</p>
+        </div>
+      `;
 
-        michezoPosts.innerHTML = `
-          <div class="card">
-            <h3>Hakuna habari za michezo bado</h3>
-            <p>Habari mpya za michezo zitaonekana hapa.</p>
-          </div>
-        `;
-
-        return;
-      }
-
-    ```javascript
-michezoPosts.innerHTML = data.map(post => {
-
-  let imageUrls = [];
-  let captions = [];
-
-  // Soma image_urls kwa usalama
-  if (post.image_urls) {
-    try {
-      imageUrls = JSON.parse(post.image_urls);
-
-      if (!Array.isArray(imageUrls)) {
-        imageUrls = [];
-      }
-    } catch (e) {
-      console.warn('image_urls si JSON sahihi:', post.image_urls);
-      imageUrls = [];
+      return;
     }
-  }
 
-  // Soma captions kwa usalama
-  if (post.image_captions) {
-    try {
-      captions = JSON.parse(post.image_captions);
 
-      if (!Array.isArray(captions)) {
-        captions = [];
-      }
-    } catch (e) {
-      console.warn('image_captions si JSON sahihi:', post.image_captions);
-      captions = [];
+    const michezoPosts = document.querySelector('#michezo-posts');
+
+
+    console.log('MICHEZO DATA:', data);
+    console.log('MICHEZO ERROR:', error);
+
+
+    if (!data || data.length === 0) {
+
+      michezoPosts.innerHTML = `
+        <div class="card">
+          <h3>Hakuna habari za michezo bado</h3>
+          <p>Habari mpya za michezo zitaonekana hapa.</p>
+        </div>
+      `;
+
+      return;
     }
-  }
 
-  let imagesHTML = '';
 
-  imageUrls.forEach((url, index) => {
+    michezoPosts.innerHTML = data.map(post => {
 
-    imagesHTML += `
-      <div style="margin-bottom:20px;">
+      let imageUrls = [];
+      let captions = [];
 
-        <img
-          src="${url}"
-          alt="${post.title || 'Michezo'}"
-          style="width:100%; border-radius:10px; display:block;">
 
-        ${
-          captions[index]
-            ? `
-              <div style="
-                margin-top:6px;
-                font-size:14px;
-                color:#555;
-                text-align:center;
-                font-style:italic;
-              ">
-                ${captions[index]}
-              </div>
-            `
-            : ''
+      /* Soma image_urls */
+
+      if (post.image_urls) {
+
+        try {
+
+          imageUrls = JSON.parse(post.image_urls);
+
+          if (!Array.isArray(imageUrls)) {
+            imageUrls = [];
+          }
+
+        } catch (e) {
+
+          console.warn(
+            'image_urls si JSON sahihi:',
+            post.image_urls
+          );
+
+          imageUrls = [];
         }
+      }
 
-      </div>
-    `;
-  });
 
-  // Kama kuna picha ya zamani kwenye image_url
-  if (imageUrls.length === 0 && post.image_url) {
-    imagesHTML = `
-      <img
-        src="${post.image_url}"
-        alt="${post.title || 'Michezo'}"
-        style="width:100%; border-radius:10px; margin-bottom:15px;">
-    `;
-  }
+      /* Soma image_captions */
 
-  return `
-    <div class="card">
+      if (post.image_captions) {
 
-      <h3>${post.title || ''}</h3>
+        try {
 
-      ${imagesHTML}
+          captions = JSON.parse(post.image_captions);
 
-      <p>
-        ${(post.content || '').replace(/\n/g, '<br>')}
-      </p>
+          if (!Array.isArray(captions)) {
+            captions = [];
+          }
 
-      <p>
-        <strong>Kategoria:</strong>
-        ${post.category || 'Michezo'}
-      </p>
+        } catch (e) {
 
-      <div class="buttons">
+          console.warn(
+            'image_captions si JSON sahihi:',
+            post.image_captions
+          );
 
-        <a
-          class="share"
-          href="https://wa.me/?text=${encodeURIComponent(
-            post.title + ' - BABUU OLE KASUKU'
-          )}"
-          target="_blank">
-          📱 Shiriki WhatsApp
-        </a>
+          captions = [];
+        }
+      }
 
-        <a
-          class="share"
-          href="https://www.facebook.com/sharer/sharer.php?u=https://chamwingi.github.io/babuu-ole-kasuku/"
-          target="_blank">
-          🔵 Shiriki Facebook
-        </a>
 
-      </div>
+      /* Tengeneza HTML ya picha */
 
-    </div>
-  `;
-}).join('');
-```
+      let imagesHTML = '';
 
-    })()
-  }
-` : post.image_url ? `
-```
+
+      imageUrls.forEach((url, index) => {
+
+        imagesHTML += `
+          <div style="margin-bottom:20px;">
 
             <img
-              src="${post.image_url}"
+              src="${url}"
               alt="${post.title || 'Michezo'}"
-              style="width:100%; border-radius:10px; margin-bottom:15px;">
-          ` : ''}
+              style="width:100%; border-radius:10px; display:block;"
+            >
+
+            ${
+              captions[index]
+                ? `
+                  <div style="
+                    margin-top:6px;
+                    font-size:14px;
+                    color:#555;
+                    text-align:center;
+                    font-style:italic;
+                  ">
+                    ${captions[index]}
+                  </div>
+                `
+                : ''
+            }
+
+          </div>
+        `;
+      });
+
+
+      /* Kama ni post ya zamani yenye image_url moja */
+
+      if (imageUrls.length === 0 && post.image_url) {
+
+        imagesHTML = `
+          <img
+            src="${post.image_url}"
+            alt="${post.title || 'Michezo'}"
+            style="width:100%; border-radius:10px; margin-bottom:15px;"
+          >
+        `;
+      }
+
+
+      /* Rudisha habari nzima */
+
+      return `
+        <div class="card">
+
+          <h3>${post.title || ''}</h3>
+
+          ${imagesHTML}
 
           <p>
             ${(post.content || '').replace(/\n/g, '<br>')}
@@ -314,30 +309,37 @@ michezoPosts.innerHTML = data.map(post => {
             <a
               class="share"
               href="https://wa.me/?text=${encodeURIComponent(
-                post.title + ' - BABUU OLE KASUKU'
+                (post.title || '') + ' - BABUU OLE KASUKU'
               )}"
-              target="_blank">
+              target="_blank"
+            >
               📱 Shiriki WhatsApp
             </a>
+
 
             <a
               class="share"
               href="https://www.facebook.com/sharer/sharer.php?u=https://chamwingi.github.io/babuu-ole-kasuku/"
-              target="_blank">
+              target="_blank"
+            >
               🔵 Shiriki Facebook
             </a>
 
           </div>
 
         </div>
+      `;
 
-      `).join('');
-    }
+    }).join('');
+
+  }
 
 
-    loadMichezo();
+  loadMichezo();
 
-  </script>
+</script>
+```
+
 
 </body>
 </html>
