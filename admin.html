@@ -497,9 +497,11 @@ isSaving = true;
 
     imageUrls.push(publicUrlData.publicUrl);
 
-const captionInput = document.querySelectorAll('#image_preview input')[imageUrls.length - 1];
+const captionInputs = document.querySelectorAll('#image_preview input');
 
-imageCaptions.push(captionInput ? captionInput.value.trim() : '');
+imageCaptions = Array.from(captionInputs).map(input =>
+  input.value.trim()
+);
   }
 
   image_url = imageUrls[0] || null;
