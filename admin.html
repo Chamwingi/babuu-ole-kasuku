@@ -690,7 +690,7 @@ console.log('IMAGE URLS:', data.image_urls);
   document.querySelector('#content').value = data.content || '';
 
    imagePreview.innerHTML = '';
-
+imagePreview.style.display = 'block';
   if (data.image_urls) {
     let imageUrls = data.image_urls;
 
