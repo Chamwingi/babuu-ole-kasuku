@@ -224,18 +224,31 @@
           <h2>${post.title || ''}</h2>
 
 
-          ${post.image_urls ? `
-            ${JSON.parse(post.image_urls).map(url => `
-              <img
-                src="${url}"
-                alt="${post.title || 'Habari'}">
-            `).join('')}
-          ` : post.image_url ? `
-            <img
-              src="${post.image_url}"
-              alt="${post.title || 'Habari'}">
-          ` : ''}
+         ${post.image_urls ? `
+  ${JSON.parse(post.image_urls).map((url, index) => `
+    <div style="margin-bottom: 20px; text-align: center;">
+      <img
+        src="${url}"
+        alt="${post.title || 'Habari'}"
+        style="max-width: 100%; height: auto; border-radius: 8px;">
 
+      ${
+        post.image_captions && post.image_captions[index]
+          ? `<div style="margin-top: 8px; font-style: italic;">
+              ${post.image_captions[index]}
+             </div>`
+          : ''
+      }
+    </div>
+  `).join('')}
+` : post.image_url ? `
+  <div style="margin-bottom: 20px; text-align: center;">
+    <img
+      src="${post.image_url}"
+      alt="${post.title || 'Habari'}"
+      style="max-width: 100%; height: auto; border-radius: 8px;">
+  </div>
+` : ''}
 
           <p>
             ${(post.content || '').replace(/\n/g, '<br>')}
