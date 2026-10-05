@@ -199,18 +199,47 @@
           <h2>${post.title || ''}</h2>
 
 
-          ${post.image_urls ? `
-            ${JSON.parse(post.image_urls).map(url => `
-              <img
-                src="${url}"
-                alt="${post.title || 'Makala'}">
-            `).join('')}
-          ` : post.image_url ? `
-            <img
-              src="${post.image_url}"
-              alt="${post.title || 'Makala'}">
-          ` : ''}
+        ${post.image_urls ? `
+  ${
+    (Array.isArray(post.image_urls)
+      ? post.image_urls
+      : JSON.parse(post.image_urls)
+    ).map((url, index) => `
+      <div style="margin-bottom:20px; text-align:center;">
 
+        <img
+          src="${url}"
+          alt="${post.title || 'Makala'}"
+          style="width:100%; border-radius:10px;">
+
+        ${
+          post.image_captions && post.image_captions[index]
+            ? `
+              <div style="
+                margin-top:8px;
+                font-size:15px;
+                font-style:italic;
+                color:#555;
+              ">
+                ${post.image_captions[index]}
+              </div>
+            `
+            : ''
+        }
+
+      </div>
+    `).join('')
+  }
+` : post.image_url ? `
+  <div style="margin-bottom:20px; text-align:center;">
+
+    <img
+      src="${post.image_url}"
+      alt="${post.title || 'Makala'}"
+      style="width:100%; border-radius:10px;">
+
+  </div>
+` : ''}
 
           <p>
             ${(post.content || '').replace(/\n/g, '<br>')}
