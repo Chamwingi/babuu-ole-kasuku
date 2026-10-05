@@ -801,10 +801,78 @@ async function editPost(id) {
     behavior: 'smooth',
     block: 'center'
   });
-
   alert('Habari imefunguliwa. Sasa unaweza kuhariri taarifa zake.');
 }
+
+async function deleteImageFromPost(id, imageIndex) {
+
+  const confirmDelete = confirm(
+    'Una uhakika unataka kufuta picha hii?'
+  );
+
+  if (!confirmDelete) {
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from('posts')
+    .select('image_urls, image_captions')
+    .eq('id', id)
+    .single();
+
+  if (error) {
+    console.error('Hitilafu ya kupata picha:', error);
+    alert('Picha haikuweza kufutwa.');
+    return;
+  }
+
+  let imageUrls = data.image_urls || [];
+  let imageCaptions = data.image_captions || [];
+
+  if (typeof imageUrls === 'string') {
+    try {
+      imageUrls = JSON.parse(imageUrls);
+    } catch (e) {
+      imageUrls = [imageUrls];
+    }
+  }
+
+  if (typeof imageCaptions === 'string') {
+    try {
+      imageCaptions = JSON.parse(imageCaptions);
+    } catch (e) {
+      imageCaptions = [imageCaptions];
+    }
+  }
+
+  imageUrls.splice(imageIndex, 1);
+  imageCaptions.splice(imageIndex, 1);
+
+  const newImageUrl = imageUrls[0] || null;
+
+  const { error: updateError } = await supabaseClient
+    .from('posts')
+    .update({
+      image_urls: imageUrls,
+      image_url: newImageUrl,
+      image_captions: imageCaptions
+    })
+    .eq('id', id);
+
+  if (updateError) {
+    console.error('Hitilafu ya kufuta picha:', updateError);
+    alert('Picha haikufutika: ' + updateError.message);
+    return;
+  }
+
+  alert('Picha imefutwa kikamilifu. 🗑️');
+
+  await editPost(id);
+  loadPostsForEdit();
+}
+
 async function deletePost(id) {
+ 
   const confirmDelete = confirm(
     'Una uhakika unataka kufuta habari hii?'
   );
