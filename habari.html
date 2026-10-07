@@ -202,7 +202,16 @@
 
 
       const habariPosts = document.querySelector('#habari-posts');
+const currentLanguage = localStorage.getItem("babuuLanguage") || "sw";
 
+const categoryText =
+  currentLanguage === "en" ? "Category:" : "Kategoria:";
+
+const whatsappText =
+  currentLanguage === "en" ? "Share on WhatsApp" : "Shiriki WhatsApp";
+
+const facebookText =
+  currentLanguage === "en" ? "Share on Facebook" : "Shiriki Facebook";
 
       if (!data || data.length === 0) {
 
