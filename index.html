@@ -546,7 +546,7 @@ const facebookText =
     habariSection.innerHTML = data.map(post => `
       <div class="card">
 
-        <h3>${post.title || ''}</h3>
+        <h3>${currentLanguage === "en" ? (post.title_en || post.title || '') : (post.title || '')}</h3>
 
         ${post.image_urls ? `
   ${JSON.parse(post.image_urls).map(url => `
