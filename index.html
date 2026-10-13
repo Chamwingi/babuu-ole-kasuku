@@ -561,10 +561,12 @@ const facebookText =
     alt="${post.title || 'Habari'}"
     style="width:100%; border-radius:10px; margin-bottom:15px;">
 ` : ''}
-       <p>
-  ${(post.content || '').replace(/\n/g, '<br>')}
+      <p>
+  ${((currentLanguage === "en"
+      ? (post.content_en || post.content || '')
+      : (post.content || '')
+    )).replace(/\n/g, '<br>')}
 </p>
-
         <p>
           <strong>${categoryText}</strong>
           ${post.category || 'Habari'}
