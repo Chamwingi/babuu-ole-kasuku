@@ -129,6 +129,26 @@
         font-size: 24px;
       }
     }
+    
+    .language-box {
+      background: #333;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .language-box label {
+      color: white;
+      font-weight: bold;
+      margin-right: 8px;
+    }
+
+    #languageSelector {
+      padding: 7px 10px;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+    }
+
   </style>
 </head>
 
@@ -152,6 +172,17 @@
     <a href="index.html#kuhusu">ℹ️ Kuhusu</a>
   </nav>
 
+
+  <!-- KICHAGUZI CHA LUGHA -->
+  <div class="language-box">
+    <label for="languageSelector" data-i18n="languageLabel">
+      Chagua lugha
+    </label>
+    <select id="languageSelector">
+      <option value="sw" data-i18n="swahili">Kiswahili</option>
+      <option value="en" data-i18n="english">English</option>
+    </select>
+  </div>
 
   <!-- HABARI -->
   <div class="container">
@@ -238,12 +269,11 @@
       Habari • Hadithi • Burudani • Makala • Zawadi
     </p>
 
- ```html
+ 
   </footer>
 
   <script src="language.js"></script>
 
 </body>
 </html>
-```
 
