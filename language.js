@@ -44,6 +44,15 @@ const translations = {
     aboutHeading: "Kuhusu BABUU OLE KASUKU",
     aboutText: "BABUU OLE KASUKU ni jukwaa la maudhui mbalimbali linalolenga kuwakutanisha wasomaji na habari, hadithi, makala, burudani na maudhui mengine yenye manufaa.",
 
+
+
+
+articleTitle: "BABUU OLE KASUKU Yazindua Jukwaa Jipya la Habari na Maudhui",
+
+footer: "Habari • Hadithi • Burudani • Makala • Zawadi",
+languageLabel: "Chagua lugha",
+swahili: "Kiswahili",
+
     footer: "Habari • Hadithi • Burudani • Makala • Zawadi",
 languageLabel: "Chagua lugha",
 swahili: "Kiswahili",
@@ -103,7 +112,7 @@ sports: "Michezo"
 
     aboutHeading: "About BABUU OLE KASUKU",
     aboutText: "BABUU OLE KASUKU is a content platform designed to bring readers news, stories, articles, entertainment and other useful content.",
-
+articleTitle: "BABUU OLE KASUKU Launches a New News and Content Platform",
     footer: "News • Stories • Entertainment • Articles • Gifts",
 languageLabel: "Choose language",
 swahili: "Swahili",
