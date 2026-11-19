@@ -576,8 +576,23 @@ async function loadAdvertisements() {
     console.error('Hitilafu ya kusoma matangazo:', error);
     return;
   }
+  const now = new Date();
 
-  if (!data || data.length === 0) {
+  const visibleAds = (data || []).filter(ad => {
+    const startsAt = ad.starts_at
+      ? new Date(ad.starts_at)
+      : null;
+
+    const endsAt = ad.ends_at
+      ? new Date(ad.ends_at)
+      : null;
+
+    return (
+      (!startsAt || startsAt <= now) &&
+      (!endsAt || endsAt >= now)
+    );
+  });
+ if (!visibleAds || visibleAds.length === 0) {
     adsContainer.innerHTML = `
       <div class="card">
         <h3>Karibu kutangaza nasi!</h3>
@@ -592,7 +607,7 @@ async function loadAdvertisements() {
     return;
   }
 
-  adsContainer.innerHTML = data.map(ad => `
+ adsContainer.innerHTML = visibleAds.map(ad => `
     <div class="card" style="text-align:center;">
 
       <h3>${ad.title || ''}</h3>
@@ -637,7 +652,7 @@ async function loadAdvertisements() {
       console.error('Supabase error:', error);
       return;
     }
-
+ 
     console.log('Posts kutoka Supabase:', data);
 
     const habariSection = document.querySelector('#habari .cards');
