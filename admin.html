@@ -197,10 +197,59 @@
       <button>🎭 Ongeza Burudani</button>
       <button>📖 Ongeza Makala</button>
       <button>🖼️ Ongeza Picha</button>
+      <button
+  type="button"
+  onclick="document.querySelector('#ads-section').scrollIntoView({behavior:'smooth'})">
+  📢 SIMAMIA MATANGAZO
+</button>
      <button type="button" onclick="editPost(${post.id})">✏️ Hariri</button>
 <button type="button" onclick="deletePost(${post.id})">🗑️ Futa</button>
      <button type="button" onclick="document.querySelector('#search-section').scrollIntoView({behavior:'smooth'})">🔎 Tafuta</button>
     </div>
+    
+<!-- SIMAMIA MATANGAZO -->
+<div class="add-news" id="ads-section">
+
+  <h2>📢 SIMAMIA MATANGAZO</h2>
+
+  <label for="ad-title">Jina la Tangazo</label>
+  <input type="text" id="ad-title"
+    placeholder="Andika jina la tangazo">
+
+  <label for="ad-description">Maelezo ya Tangazo</label>
+  <textarea id="ad-description"
+    placeholder="Andika maelezo ya tangazo"></textarea>
+
+  <label for="ad-image">🖼️ Chagua Bango la Tangazo</label>
+  <input type="file" id="ad-image" accept="image/*">
+
+  <label for="ad-link">Kiungo cha Tangazo</label>
+  <input type="url" id="ad-link"
+    placeholder="https://...">
+
+  <label for="ad-start">Tarehe ya Kuanza</label>
+  <input type="date" id="ad-start">
+
+  <label for="ad-end">Tarehe ya Kumalizika</label>
+  <input type="date" id="ad-end">
+
+  <button type="button" id="publish-ad" class="publish">
+    📢 CHAPISHA TANGAZO
+  </button>
+
+  <div id="ad-message"></div>
+
+  <hr>
+
+  <h3>📋 Matangazo Yaliyopo</h3>
+
+  <div id="ads-list">
+    Inapakia matangazo...
+  </div>
+
+</div>
+<!-- MWISHO WA SIMAMIA MATANGAZO -->
+
 <!-- HABARI ZILIZOPO -->
 <div class="add-news" id="edit-section">
 
@@ -338,9 +387,10 @@ loginButton.addEventListener('click', async function () {
    loginSection.style.display = 'none';
   adminDashboard.style.display = 'block';
 
-  loadPostsForEdit();
+ loadPostsForEdit();
+loadAds();
 
-  console.log('Admin ameingia:', data.user.email);
+console.log('Admin ameingia:', data.user.email);
 });
    const publishButton = document.querySelector('.publish');
 let editingPostId = null;
@@ -896,8 +946,218 @@ async function deletePost(id) {
 
  console.log('LOAD POSTS INAITWA');
 loadPostsForEdit();
+
 }
   
+
+// ======================================
+// MFUMO WA MATANGAZO - BABUU OLE KASUKU
+// ======================================
+
+const adTitle = document.querySelector('#ad-title');
+const adDescription = document.querySelector('#ad-description');
+const adImage = document.querySelector('#ad-image');
+const adLink = document.querySelector('#ad-link');
+const adStart = document.querySelector('#ad-start');
+const adEnd = document.querySelector('#ad-end');
+const publishAdButton = document.querySelector('#publish-ad');
+const adMessage = document.querySelector('#ad-message');
+const adsList = document.querySelector('#ads-list');
+
+
+// KUPAKIA MATANGAZO YALIYOPO
+async function loadAds() {
+
+  adsList.textContent = 'Inapakia matangazo...';
+
+  const { data, error } = await supabaseClient
+    .from('advertisements')
+    .select('*')
+    .order('id', { ascending: false });
+
+  if (error) {
+    console.error(error);
+    adsList.textContent = 'Hitilafu: ' + error.message;
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    adsList.textContent = 'Hakuna matangazo yaliyopo.';
+    return;
+  }
+
+  adsList.innerHTML = data.map(ad => `
+    <div style="border:1px solid #ddd;padding:15px;margin:10px 0;border-radius:8px;">
+      <h3>${escapeAdText(ad.title)}</h3>
+      ${ad.image_url ? `<img src="${escapeAdText(ad.image_url)}" style="width:100%;max-width:300px;">` : ''}
+      <p>${escapeAdText(ad.description || '')}</p>
+      <p>Kiungo: ${escapeAdText(ad.target_url || 'Hakuna')}</p>
+      <p>Hali: ${ad.is_active ? 'Linaendelea' : 'Limezimwa'}</p>
+      <button type="button" data-ad-delete="${ad.id}">
+        🗑️ Futa Tangazo
+      </button>
+    </div>
+  `).join('');
+
+  adsList.querySelectorAll('[data-ad-delete]').forEach(button => {
+    button.addEventListener('click', () => {
+      deleteAd(button.dataset.adDelete);
+    });
+  });
+}
+
+
+// KUSAIDIA USALAMA WA MAANDISHI
+function escapeAdText(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  })[char]);
+}
+
+
+// KUCHAPISHA TANGAZO
+publishAdButton.addEventListener('click', async function () {
+
+  if (publishAdButton.disabled) return;
+
+  const title = adTitle.value.trim();
+  const description = adDescription.value.trim();
+  const image = adImage.files[0];
+  const link = adLink.value.trim();
+  const start = adStart.value;
+  const end = adEnd.value;
+
+  if (!title || !description || !image) {
+    alert('Jaza jina, maelezo na picha ya tangazo.');
+    return;
+  }
+
+  if (end && start && end < start) {
+    alert('Tarehe ya mwisho haiwezi kuwa kabla ya tarehe ya kuanza.');
+    return;
+  }
+
+  if (link) {
+    try {
+      const parsed = new URL(link);
+      if (!['http:', 'https:'].includes(parsed.protocol)) {
+        throw new Error();
+      }
+    } catch {
+      alert('Weka kiungo sahihi cha tangazo.');
+      return;
+    }
+  }
+
+  if (!image.type.startsWith('image/')) {
+    alert('Tafadhali chagua picha tu.');
+    return;
+  }
+
+  publishAdButton.disabled = true;
+  publishAdButton.textContent = '⏳ Inachapisha...';
+
+  let uploadedPath = null;
+
+  try {
+
+    const { data: authData, error: authError } =
+      await supabaseClient.auth.getUser();
+
+    if (authError || !authData.user) {
+      throw new Error('Tafadhali ingia kwanza kama Admin.');
+    }
+
+    const extension = image.name.split('.').pop();
+
+    const fileName = Date.now() + '-' +
+      Math.random().toString(36).substring(2, 8) +
+      '.' + extension;
+
+    uploadedPath = 'matangazo/' + fileName;
+
+    const { error: uploadError } = await supabaseClient
+      .storage
+      .from('image_url')
+      .upload(uploadedPath, image);
+
+    if (uploadError) throw uploadError;
+
+    const { data: publicData } = supabaseClient
+      .storage
+      .from('image_url')
+      .getPublicUrl(uploadedPath);
+
+    const { error } = await supabaseClient
+      .from('advertisements')
+      .insert([{
+        title: title,
+        description: description,
+        image_url: publicData.publicUrl,
+        target_url: link || null,
+        starts_at: start ? start + 'T00:00:00Z' : null,
+        ends_at: end ? end + 'T23:59:59Z' : null,
+        is_active: true,
+        created_by: authData.user.id
+      }]);
+
+    if (error) throw error;
+
+    adMessage.textContent = '🎉 Tangazo limechapishwa!';
+
+    adTitle.value = '';
+    adDescription.value = '';
+    adImage.value = '';
+    adLink.value = '';
+    adStart.value = '';
+    adEnd.value = '';
+
+    await loadAds();
+
+  } catch (error) {
+
+    console.error('Hitilafu ya matangazo:', error);
+
+    adMessage.textContent =
+      'Tangazo halikuchapishwa: ' + error.message;
+
+  } finally {
+
+    publishAdButton.disabled = false;
+    publishAdButton.textContent = '📢 CHAPISHA TANGAZO';
+
+  }
+
+});
+
+
+// KUFUTA TANGAZO
+async function deleteAd(id) {
+
+  if (!confirm('Una uhakika unataka kufuta tangazo hili?')) {
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from('advertisements')
+    .delete()
+    .eq('id', id);
+
+  if (error) {
+    alert('Hitilafu ya kufuta: ' + error.message);
+    return;
+  }
+
+  alert('Tangazo limefutwa kikamilifu.');
+
+  await loadAds();
+}
+
+// MWISHO WA MFUMO WA MATANGAZO
 
     const searchInput = document.querySelector('#search-input');
     const searchResults = document.querySelector('#search-results');
