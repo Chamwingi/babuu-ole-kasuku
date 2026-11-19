@@ -271,27 +271,19 @@
   padding:20px 15px;
   text-align:center;
 ">
-  <h2 style="color:#8b0000;">
-    📢 MATANGAZO
-  </h2>
+  <h2 style="color:#8b0000;">📢 MATANGAZO</h2>
 
-  <div style="
-    background:white;
-    padding:25px;
-    border-radius:12px;
-    box-shadow:0 2px 10px #0002;
-  ">
-    <h3>Karibu kutangaza nasi!</h3>
-
-    <p>
-      Tangaza biashara, bidhaa, huduma,
-      vitabu na matukio yako kupitia
-      BABUU OLE KASUKU.
-    </p>
-
-    <p>
-      Nafasi za matangazo zinapatikana.
-    </p>
+  <div id="active-advertisements">
+    <div style="
+      background:white;
+      padding:25px;
+      border-radius:12px;
+      box-shadow:0 2px 10px #0002;
+    ">
+      <h3>Karibu kutangaza nasi!</h3>
+      <p>Tangaza biashara, bidhaa, huduma, vitabu na matukio yako kupitia BABUU OLE KASUKU.</p>
+      <p>Nafasi za matangazo zinapatikana.</p>
+    </div>
   </div>
 </section>
 <!-- MWISHO WA MATANGAZO -->
@@ -564,6 +556,76 @@
   );
 </script>
  <script>
+   // ======================================
+// KUSOMA MATANGAZO KUTOKA SUPABASE
+// ======================================
+
+async function loadAdvertisements() {
+
+  const adsContainer = document.querySelector('#active-advertisements');
+
+  if (!adsContainer) return;
+
+  const { data, error } = await supabaseClient
+    .from('advertisements')
+    .select('*')
+    .eq('is_active', true)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Hitilafu ya kusoma matangazo:', error);
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    adsContainer.innerHTML = `
+      <div class="card">
+        <h3>Karibu kutangaza nasi!</h3>
+        <p>
+          Tangaza biashara, bidhaa, huduma,
+          vitabu na matukio yako kupitia
+          BABUU OLE KASUKU.
+        </p>
+        <p>Nafasi za matangazo zinapatikana.</p>
+      </div>
+    `;
+    return;
+  }
+
+  adsContainer.innerHTML = data.map(ad => `
+    <div class="card" style="text-align:center;">
+
+      <h3>${ad.title || ''}</h3>
+
+      ${ad.image_url ? `
+        <a href="${ad.target_url || '#'}"
+           target="_blank"
+           rel="noopener noreferrer">
+          <img
+            src="${ad.image_url}"
+            alt="${ad.title || 'Tangazo'}"
+            style="
+              width:100%;
+              max-width:700px;
+              height:auto;
+              border-radius:10px;
+            ">
+        </a>
+      ` : ''}
+
+      <p>${ad.description || ''}</p>
+
+      ${ad.target_url ? `
+        <a href="${ad.target_url}"
+           target="_blank"
+           rel="noopener noreferrer">
+          Tembelea hapa →
+        </a>
+      ` : ''}
+
+    </div>
+  `).join('');
+}
   async function loadPosts() {
 
     const { data, error } = await supabaseClient
@@ -657,7 +719,8 @@ const facebookText =
     `).join('');
   }
 
-  loadPosts();
+ loadAdvertisements();
+loadPosts();
 </script>
 
 
