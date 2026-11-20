@@ -795,18 +795,18 @@ const facebookText =
 
         <h3>${currentLanguage === "en" ? (post.title_en || post.title || '') : (post.title || '')}</h3>
 
-        ${post.image_urls ? `
+${post.image_urls ? `
   ${JSON.parse(post.image_urls).map(url => `
     <img
       src="${url}"
       alt="${post.title || 'Habari'}"
-      style="width:100%; border-radius:10px; margin-bottom:15px;">
+      style="display:block; width:100%; height:auto !important; max-height:none; object-fit:contain; border-radius:10px; margin-bottom:15px;">
   `).join('')}
 ` : post.image_url ? `
   <img
     src="${post.image_url}"
     alt="${post.title || 'Habari'}"
-    style="width:100%; border-radius:10px; margin-bottom:15px;">
+    style="display:block; width:100%; height:auto !important; max-height:none; object-fit:contain; border-radius:10px; margin-bottom:15px;">
 ` : ''}
       <p>
   ${((currentLanguage === "en"
