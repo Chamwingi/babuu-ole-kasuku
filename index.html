@@ -200,6 +200,86 @@
         padding: 20px;
       }
     }
+   
+/* =================================
+   BABUU OLE KASUKU - LAYOUT UPDATE
+================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 30px 15px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(230px, 100%), 1fr)
+  );
+  gap: 20px;
+  align-items: stretch;
+}
+
+.card {
+  min-width: 0;
+  overflow-wrap: break-word;
+  height: 100%;
+}
+
+.card img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+section {
+  min-width: 0;
+}
+
+footer {
+  width: 100%;
+  overflow-wrap: break-word;
+}
+
+nav {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 20px 12px;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  nav a {
+    margin: 4px;
+  }
+}
+ 
+    
   </style>
  
 <script>
