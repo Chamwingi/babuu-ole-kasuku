@@ -324,10 +324,10 @@
         multiple
       >
 
-      <div id="image_preview"></div>
-     <button type="button" class="publish">
+    div id="image_preview"></div>
+    <button type="button" id="publish-news" class="publish">
   🟢 CHAPISHA HABARI
-</button>
+</button>  <
 
     </div>
 
@@ -392,7 +392,7 @@ loadAds();
 
 console.log('Admin ameingia:', data.user.email);
 });
-   const publishButton = document.querySelector('.publish');
+  const publishButton = document.querySelector('#publish-news');
 let editingPostId = null;
 let isSaving = false;
     const imageFile = document.querySelector('#image_file');
