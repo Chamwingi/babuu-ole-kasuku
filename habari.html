@@ -177,6 +177,90 @@
     );
 
 
+function escapeHTML(value) {
+  return String(value ?? '').replace(/[&<>"']/g, char => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  })[char]);
+}
+
+function renderPostBody(post) {
+  let imageUrls = [];
+
+  if (Array.isArray(post.image_urls)) {
+    imageUrls = post.image_urls;
+  } else if (post.image_urls) {
+    try {
+      imageUrls = JSON.parse(post.image_urls);
+    } catch (error) {
+      console.error('Hitilafu ya kusoma picha:', error);
+    }
+  }
+
+  // Kuhifadhi picha za zamani zinazotumia image_url
+  if (imageUrls.length === 0 && post.image_url) {
+    imageUrls = [post.image_url];
+  }
+
+  const captions = Array.isArray(post.image_captions)
+    ? post.image_captions
+    : [];
+
+  const usedImages = new Set();
+
+  function makeImage(index) {
+    const url = imageUrls[index];
+
+    if (!url) return '';
+
+    usedImages.add(index);
+
+    const caption = captions[index]
+      ? `<div style="margin-top:8px;font-style:italic;">
+           ${escapeHTML(captions[index])}
+         </div>`
+      : '';
+
+    return `
+      <div style="margin:20px 0;text-align:center;">
+        <img
+          src="${escapeHTML(url)}"
+          alt="${escapeHTML(post.title || 'Habari')}"
+          style="max-width:100%;height:auto;border-radius:8px;">
+        ${caption}
+      </div>
+    `;
+  }
+
+  const content = String(post.content || '');
+
+  const formattedContent = content
+    .split(/(\[\[IMAGE_\d+\]\])/g)
+    .map(part => {
+      const match = part.match(/^\[\[IMAGE_(\d+)\]\]$/);
+
+      if (match) {
+        return makeImage(Number(match[1]));
+      }
+
+      return escapeHTML(part).replace(/\n/g, '<br>');
+    })
+    .join('');
+
+  // Picha ambazo hazikuwekewa alama zitaendelea kuonekana
+  const remainingImages = imageUrls
+    .map((url, index) => usedImages.has(index) ? '' : makeImage(index))
+    .join('');
+
+  return `
+    <div>${formattedContent}</div>
+    ${remainingImages}
+  `;
+}
+
     async function loadHabari() {
 
       const { data, error } = await supabaseClient
@@ -233,42 +317,9 @@ const facebookText =
           <h2>${post.title || ''}</h2>
 
 
-         ${post.image_urls ? `
-  ${JSON.parse(post.image_urls).map((url, index) => `
-    <div style="margin-bottom: 20px; text-align: center;">
-      <img
-        src="${url}"
-        alt="${post.title || 'Habari'}"
-        style="max-width: 100%; height: auto; border-radius: 8px;">
-
-      ${
-        post.image_captions && post.image_captions[index]
-          ? `<div style="margin-top: 8px; font-style: italic;">
-              ${post.image_captions[index]}
-             </div>`
-          : ''
-      }
-    </div>
-  `).join('')}
-` : post.image_url ? `
-  <div style="margin-bottom: 20px; text-align: center;">
-    <img
-      src="${post.image_url}"
-      alt="${post.title || 'Habari'}"
-      style="max-width: 100%; height: auto; border-radius: 8px;">
-  </div>
-` : ''}
-
-          <p>
-            ${(post.content || '').replace(/\n/g, '<br>')}
-          </p>
-
-
-          <p><p>
+      ${renderPostBody(post)}
+ <p>
   <strong>${categoryText}</strong>
-  ${post.category || 'Habari'}
-</p>
-  
   ${post.category || 'Habari'}
 </p>
 
