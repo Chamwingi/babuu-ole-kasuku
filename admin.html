@@ -399,15 +399,19 @@ let isSaving = false;
     const imagePreview = document.querySelector('#image_preview');
 imageFile.addEventListener('change', function () {
   const files = imageFile.files;
-console.log("IDADI YA PICHA:", files.length);
+
+  console.log("IDADI YA PICHA:", files.length);
+
   imagePreview.innerHTML = '';
-imagePreview.style.display = 'block';
+  imagePreview.style.display = 'block';
+
   if (!files || files.length === 0) {
     return;
   }
 
-  for (const file of files) {
+  for (let currentImageIndex = 0; currentImageIndex < files.length; currentImageIndex++) {
 
+    const file = files[currentImageIndex];
   if (!file.type.startsWith('image/')) {
     alert('Tafadhali chagua faili za picha tu.');
     imageFile.value = '';
@@ -452,9 +456,7 @@ caption.style.padding = '8px';
 caption.style.boxSizing = 'border-box';
 caption.style.marginTop = '5px';
 
-wrapper.appendChild(img);
-wrapper.appendChild(caption);
-imagePreview.appendChild(wrapper);
+
 
 caption.style.width = '150px';
 caption.style.padding = '8px';
@@ -464,11 +466,39 @@ caption.style.marginTop = '5px';
 caption.style.padding = '8px';
 caption.style.boxSizing = 'border-box';
 
+const insertButton = document.createElement('button');
 
-   wrapper.appendChild(img);
+insertButton.type = 'button';
+insertButton.textContent = '📍 WEKA PICHA HAPA';
+insertButton.style.display = 'block';
+insertButton.style.margin = '8px auto';
+insertButton.style.padding = '8px';
+insertButton.style.cursor = 'pointer';
+
+insertButton.addEventListener('click', function () {
+
+  const contentField = document.querySelector('#content');
+
+  const marker = '\n[[IMAGE_' + currentImageIndex + ']]\n';
+
+  const start = contentField.selectionStart;
+  const end = contentField.selectionEnd;
+
+  contentField.setRangeText(marker, start, end, 'end');
+
+  contentField.focus();
+
+  alert('Nafasi ya picha imewekwa kwenye maandishi!');
+
+});
+
+wrapper.appendChild(img);
 wrapper.appendChild(captionLabel);
 wrapper.appendChild(caption);
-    imagePreview.appendChild(wrapper);
+wrapper.appendChild(insertButton);
+
+imagePreview.appendChild(wrapper);
+
   };
 
   reader.readAsDataURL(file);
@@ -510,6 +540,7 @@ isSaving = true;
 
 
   for (const file of files) {
+   
 
     if (!file.type.startsWith('image/')) {
       throw new Error('Tafadhali chagua faili za picha tu.');
