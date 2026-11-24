@@ -181,184 +181,157 @@
     }
 
 
-    michezoPosts.innerHTML = data.map(post => {
+   
+michezoPosts.innerHTML = data.map(post => {
 
-      let imageUrls = [];
-      let captions = [];
+  let imageUrls = [];
+  let captions = [];
 
+  /* Soma image_urls */
 
-      /* Soma image_urls */
+  if (post.image_urls) {
+    try {
+      imageUrls = Array.isArray(post.image_urls)
+        ? post.image_urls
+        : JSON.parse(post.image_urls);
 
-    if (post.image_urls) {
+      if (!Array.isArray(imageUrls)) imageUrls = [];
 
-  try {
-
-    if (Array.isArray(post.image_urls)) {
-      imageUrls = post.image_urls;
-    } else {
-      imageUrls = JSON.parse(post.image_urls);
-    }
-
-    if (!Array.isArray(imageUrls)) {
+    } catch (e) {
+      console.warn('image_urls haikusomeka:', post.image_urls);
       imageUrls = [];
     }
-
-  } catch (e) {
-
-    console.warn(
-      'image_urls haikusomeka:',
-      post.image_urls
-    );
-
-    imageUrls = [];
   }
-}
 
+  /* Soma image_captions */
 
-/* Soma image_captions */
+  if (post.image_captions) {
+    try {
+      captions = Array.isArray(post.image_captions)
+        ? post.image_captions
+        : JSON.parse(post.image_captions);
 
-if (post.image_captions) {
+      if (!Array.isArray(captions)) captions = [];
 
-  try {
-
-    if (Array.isArray(post.image_captions)) {
-      captions = post.image_captions;
-    } else {
-      captions = JSON.parse(post.image_captions);
-    }
-
-    if (!Array.isArray(captions)) {
+    } catch (e) {
+      console.warn('image_captions haikusomeka:', post.image_captions);
       captions = [];
     }
-
-  } catch (e) {
-
-    console.warn(
-      'image_captions haikusomeka:',
-      post.image_captions
-    );
-
-    captions = [];
   }
-}
 
+  /* Picha za habari za zamani */
 
+  if (imageUrls.length === 0 && post.image_url) {
+    imageUrls = [post.image_url];
+  }
 
-  
-/* Kama ni habari ya zamani yenye picha moja */
+  /* Tengeneza picha pamoja na maelezo yake */
 
-if (imageUrls.length === 0 && post.image_url) {
-  imageUrls = [post.image_url];
-}
+  function tengenezaPicha(index) {
+    if (!imageUrls[index]) return '';
 
-/* Tengeneza picha pamoja na maelezo yake */
+    return `
+      <div style="margin:20px 0;">
+        <img
+          src="${imageUrls[index]}"
+          alt="${post.title || 'Michezo'}"
+          style="width:100%; border-radius:10px; display:block;"
+        >
+        ${
+          captions[index]
+            ? `
+              <div style="margin-top:6px; font-size:14px; color:#555; text-align:center; font-style:italic;">
+                ${captions[index]}
+              </div>
+            `
+            : ''
+        }
+      </div>
+    `;
+  }
 
-function tengenezaPicha(index) {
-  if (!imageUrls[index]) return '';
+  /* Soma maudhui ya habari */
+
+  const content = post.content || '';
+  const inaAlamaZaPicha = /\[PICHA\s+\d+\]/i.test(content);
+
+  let imagesHTML = '';
+
+  /* Kama hakuna alama, picha zote ziwekwe juu */
+
+  if (!inaAlamaZaPicha) {
+    imageUrls.forEach((url, index) => {
+      imagesHTML += tengenezaPicha(index);
+    });
+  }
+
+  /* Weka picha sehemu zilizoandikwa [PICHA 1], [PICHA 2] */
+
+  const parts = content.split(/(\[PICHA\s+\d+\])/gi);
+
+  const contentHTML = parts.map(part => {
+
+    const match = part.match(/^\[PICHA\s+(\d+)\]$/i);
+
+    if (match) {
+      const index = Number(match[1]) - 1;
+
+      if (index < 0 || index >= imageUrls.length) {
+        return part;
+      }
+
+      return tengenezaPicha(index);
+    }
+
+    return part
+      .split(/\n\s*\n/)
+      .filter(paragraph => paragraph.trim())
+      .map(paragraph => `
+        <p style="line-height:1.8; margin-bottom:16px;">
+          ${paragraph.replace(/\n/g, '<br>')}
+        </p>
+      `)
+      .join('');
+
+  }).join('');
+
+  /* Onyesha habari kwenye ukurasa */
 
   return `
-    <div style="margin:20px 0;">
-      <img
-        src="${imageUrls[index]}"
-        alt="${post.title || 'Michezo'}"
-        style="width:100%; border-radius:10px; display:block;"
-      >
-      ${
-        captions[index]
-          ? `
-            <div style="margin-top:6px; font-size:14px; color:#555; text-align:center; font-style:italic;">
-              ${captions[index]}
-            </div>
-          `
-          : ''
-      }
+    <div class="card">
+
+      <h3>${post.title || ''}</h3>
+
+      ${imagesHTML}
+
+      <div>
+        ${contentHTML}
+      </div>
+
+      <div class="buttons">
+        <a
+          class="share"
+          href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}"
+          target="_blank"
+        >Shiriki Facebook</a>
+
+        <a
+          class="share"
+          href="https://wa.me/?text=${encodeURIComponent((post.title || '') + ' ' + window.location.href)}"
+          target="_blank"
+        >Shiriki WhatsApp</a>
+      </div>
+
     </div>
   `;
-}
-
-/* Soma maudhui ya habari */
-
-const content = post.content || '';
-const inaAlamaZaPicha = /\[PICHA\s+\d+\]/i.test(content);
-
-let imagesHTML = '';
-
-/* Bila alama, picha ziwekwe juu */
-
-if (!inaAlamaZaPicha) {
-  imageUrls.forEach((url, index) => {
-    imagesHTML += tengenezaPicha(index);
-  });
-}
-
-/* Picha ziingie ndani ya makala kulingana na alama */
-
-const contentHTML = content
-  .split(/\n\s*\n/)
-  .map(paragraph => {
-    const paragraphHTML = paragraph.replace(
-      /\[PICHA\s+(\d+)\]/gi,
-      (alama, namba) => {
-        const index = Number(namba) - 1;
-        if (index < 0 || index >= imageUrls.length) return alama;
-        return tengenezaPicha(index);
-      }
-    );
-
-    return `<p style="line-height:1.8; margin-bottom:16px;">
-      ${paragraphHTML.replace(/\n/g, '<br>')}
-    </p>`;
-  })
-  .join('');
-
-/* Onyesha habari */
-
-return `
-  <div class="card">
-    <h3>${post.title || ''}</h3>
-
-    ${imagesHTML}
-
-    <div>${contentHTML}</div>
-
-    <p>
-      <strong>Kategoria:</strong>
-      ${post.category || 'Michezo'}
-    </p>
-
-    <div class="buttons">
-      <a
-        class="share"
-        href="https://wa.me/?text=${encodeURIComponent(
-          (post.title || '') + ' - BABUU OLE KASUKU'
-        )}"
-        target="_blank"
-      >
-        📱 Shiriki WhatsApp
-      </a>
-
-      <a
-        class="share"
-        href="https://www.facebook.com/sharer/sharer.php?u=https://chamwingi.github.io/babuu-ole-kasuku/"
-        target="_blank"
-      >
-        🔵 Shiriki Facebook
-      </a>
-    </div>
-  </div>
-`;
 
 }).join('');
 
-
-
   }
-
 
   loadMichezo();
 
 </script>
-
 
 
 
