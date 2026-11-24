@@ -187,79 +187,137 @@ function escapeHTML(value) {
   })[char]);
 }
 
-function renderPostBody(post) {
-  let imageUrls = [];
 
-  if (Array.isArray(post.image_urls)) {
-    imageUrls = post.image_urls;
-  } else if (post.image_urls) {
+ 
+function renderPostBody(post) {
+
+  let imageUrls = [];
+  let captions = [];
+
+  /* Soma picha */
+
+  if (post.image_urls) {
     try {
-      imageUrls = JSON.parse(post.image_urls);
+      imageUrls = Array.isArray(post.image_urls)
+        ? post.image_urls
+        : JSON.parse(post.image_urls);
+
+      if (!Array.isArray(imageUrls)) imageUrls = [];
+
     } catch (error) {
       console.error('Hitilafu ya kusoma picha:', error);
+      imageUrls = [];
     }
   }
 
-  // Kuhifadhi picha za zamani zinazotumia image_url
+  /* Soma maelezo ya picha */
+
+  if (post.image_captions) {
+    try {
+      captions = Array.isArray(post.image_captions)
+        ? post.image_captions
+        : JSON.parse(post.image_captions);
+
+      if (!Array.isArray(captions)) captions = [];
+
+    } catch (error) {
+      console.error('Hitilafu ya kusoma maelezo ya picha:', error);
+      captions = [];
+    }
+  }
+
+  /* Hifadhi picha za zamani */
+
   if (imageUrls.length === 0 && post.image_url) {
     imageUrls = [post.image_url];
   }
 
-  const captions = Array.isArray(post.image_captions)
-    ? post.image_captions
-    : [];
-
-  const usedImages = new Set();
+  /* Tengeneza picha pamoja na maelezo yake */
 
   function makeImage(index) {
-    const url = imageUrls[index];
 
-    if (!url) return '';
-
-    usedImages.add(index);
+    if (!imageUrls[index]) return '';
 
     const caption = captions[index]
-      ? `<div style="margin-top:8px;font-style:italic;">
-           ${escapeHTML(captions[index])}
-         </div>`
+      ? `
+        <div style="
+          margin-top:8px;
+          font-size:14px;
+          color:#555;
+          text-align:center;
+          font-style:italic;
+        ">
+          ${escapeHTML(captions[index])}
+        </div>
+      `
       : '';
 
     return `
       <div style="margin:20px 0;text-align:center;">
         <img
-          src="${escapeHTML(url)}"
+          src="${escapeHTML(imageUrls[index])}"
           alt="${escapeHTML(post.title || 'Habari')}"
-          style="max-width:100%;height:auto;border-radius:8px;">
+          style="max-width:100%;height:auto;border-radius:8px;display:block;margin:auto;"
+        >
         ${caption}
       </div>
     `;
   }
 
+  /* Soma maudhui */
+
   const content = String(post.content || '');
 
-  const formattedContent = content
-    .split(/(\[\[IMAGE_\d+\]\])/g)
-    .map(part => {
-      const match = part.match(/^\[\[IMAGE_(\d+)\]\]$/);
+  const inaAlamaZaPicha = /\[PICHA\s+\d+\]/i.test(content);
 
-      if (match) {
-        return makeImage(Number(match[1]));
+  let imagesHTML = '';
+
+  /* Bila alama, picha ziwekwe juu */
+
+  if (!inaAlamaZaPicha) {
+    imageUrls.forEach((url, index) => {
+      imagesHTML += makeImage(index);
+    });
+  }
+
+  /* Ingiza picha kulingana na alama */
+
+  const parts = content.split(/(\[PICHA\s+\d+\])/gi);
+
+  const formattedContent = parts.map(part => {
+
+    const match = part.match(/^\[PICHA\s+(\d+)\]$/i);
+
+    if (match) {
+      const index = Number(match[1]) - 1;
+
+      if (index < 0 || index >= imageUrls.length) {
+        return escapeHTML(part);
       }
 
-      return escapeHTML(part).replace(/\n/g, '<br>');
-    })
-    .join('');
+      return makeImage(index);
+    }
 
-  // Picha ambazo hazikuwekewa alama zitaendelea kuonekana
-  const remainingImages = imageUrls
-    .map((url, index) => usedImages.has(index) ? '' : makeImage(index))
-    .join('');
+    return part
+      .split(/\n\s*\n/)
+      .filter(paragraph => paragraph.trim())
+      .map(paragraph => `
+        <p style="line-height:1.8;margin-bottom:16px;">
+          ${escapeHTML(paragraph).replace(/\n/g, '<br>')}
+        </p>
+      `)
+      .join('');
+
+  }).join('');
 
   return `
-    <div>${formattedContent}</div>
-    ${remainingImages}
+    ${imagesHTML}
+    <div>
+      ${formattedContent}
+    </div>
   `;
 }
+
 
     async function loadHabari() {
 
