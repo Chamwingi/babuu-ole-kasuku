@@ -244,102 +244,113 @@ if (post.image_captions) {
 
 
 
-      /* Tengeneza HTML ya picha */
+  
+/* Kama ni habari ya zamani yenye picha moja */
 
-      let imagesHTML = '';
+if (imageUrls.length === 0 && post.image_url) {
+  imageUrls = [post.image_url];
+}
 
+/* Tengeneza picha pamoja na maelezo yake */
 
-      imageUrls.forEach((url, index) => {
+function tengenezaPicha(index) {
+  if (!imageUrls[index]) return '';
 
-        imagesHTML += `
-          <div style="margin-bottom:20px;">
-
-            <img
-              src="${url}"
-              alt="${post.title || 'Michezo'}"
-              style="width:100%; border-radius:10px; display:block;"
-            >
-
-            ${
-              captions[index]
-                ? `
-                  <div style="
-                    margin-top:6px;
-                    font-size:14px;
-                    color:#555;
-                    text-align:center;
-                    font-style:italic;
-                  ">
-                    ${captions[index]}
-                  </div>
-                `
-                : ''
-            }
-
-          </div>
-        `;
-      });
-
-
-      /* Kama ni post ya zamani yenye image_url moja */
-
-      if (imageUrls.length === 0 && post.image_url) {
-
-        imagesHTML = `
-          <img
-            src="${post.image_url}"
-            alt="${post.title || 'Michezo'}"
-            style="width:100%; border-radius:10px; margin-bottom:15px;"
-          >
-        `;
+  return `
+    <div style="margin:20px 0;">
+      <img
+        src="${imageUrls[index]}"
+        alt="${post.title || 'Michezo'}"
+        style="width:100%; border-radius:10px; display:block;"
+      >
+      ${
+        captions[index]
+          ? `
+            <div style="margin-top:6px; font-size:14px; color:#555; text-align:center; font-style:italic;">
+              ${captions[index]}
+            </div>
+          `
+          : ''
       }
+    </div>
+  `;
+}
+
+/* Soma maudhui ya habari */
+
+const content = post.content || '';
+const inaAlamaZaPicha = /\[PICHA\s+\d+\]/i.test(content);
+
+let imagesHTML = '';
+
+/* Bila alama, picha ziwekwe juu */
+
+if (!inaAlamaZaPicha) {
+  imageUrls.forEach((url, index) => {
+    imagesHTML += tengenezaPicha(index);
+  });
+}
+
+/* Picha ziingie ndani ya makala kulingana na alama */
+
+const contentHTML = content
+  .split(/\n\s*\n/)
+  .map(paragraph => {
+    const paragraphHTML = paragraph.replace(
+      /\[PICHA\s+(\d+)\]/gi,
+      (alama, namba) => {
+        const index = Number(namba) - 1;
+        if (index < 0 || index >= imageUrls.length) return alama;
+        return tengenezaPicha(index);
+      }
+    );
+
+    return `<p style="line-height:1.8; margin-bottom:16px;">
+      ${paragraphHTML.replace(/\n/g, '<br>')}
+    </p>`;
+  })
+  .join('');
+
+/* Onyesha habari */
+
+return `
+  <div class="card">
+    <h3>${post.title || ''}</h3>
+
+    ${imagesHTML}
+
+    <div>${contentHTML}</div>
+
+    <p>
+      <strong>Kategoria:</strong>
+      ${post.category || 'Michezo'}
+    </p>
+
+    <div class="buttons">
+      <a
+        class="share"
+        href="https://wa.me/?text=${encodeURIComponent(
+          (post.title || '') + ' - BABUU OLE KASUKU'
+        )}"
+        target="_blank"
+      >
+        📱 Shiriki WhatsApp
+      </a>
+
+      <a
+        class="share"
+        href="https://www.facebook.com/sharer/sharer.php?u=https://chamwingi.github.io/babuu-ole-kasuku/"
+        target="_blank"
+      >
+        🔵 Shiriki Facebook
+      </a>
+    </div>
+  </div>
+`;
+
+}).join('');
 
 
-      /* Rudisha habari nzima */
-
-      return `
-        <div class="card">
-
-          <h3>${post.title || ''}</h3>
-
-          ${imagesHTML}
-
-          <p>
-            ${(post.content || '').replace(/\n/g, '<br>')}
-          </p>
-
-          <p>
-            <strong>Kategoria:</strong>
-            ${post.category || 'Michezo'}
-          </p>
-
-          <div class="buttons">
-
-            <a
-              class="share"
-              href="https://wa.me/?text=${encodeURIComponent(
-                (post.title || '') + ' - BABUU OLE KASUKU'
-              )}"
-              target="_blank"
-            >
-              📱 Shiriki WhatsApp
-            </a>
-
-
-            <a
-              class="share"
-              href="https://www.facebook.com/sharer/sharer.php?u=https://chamwingi.github.io/babuu-ole-kasuku/"
-              target="_blank"
-            >
-              🔵 Shiriki Facebook
-            </a>
-
-          </div>
-
-        </div>
-      `;
-
-    }).join('');
 
   }
 
@@ -347,6 +358,7 @@ if (post.image_captions) {
   loadMichezo();
 
 </script>
+
 
 
 
