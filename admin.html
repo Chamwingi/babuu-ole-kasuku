@@ -479,7 +479,7 @@ insertButton.addEventListener('click', function () {
 
   const contentField = document.querySelector('#content');
 
-  const marker = '\n[[IMAGE_' + currentImageIndex + ']]\n';
+const marker = '\n[PICHA ' + (currentImageIndex + 1) + ']\n';
 
   const start = contentField.selectionStart;
   const end = contentField.selectionEnd;
