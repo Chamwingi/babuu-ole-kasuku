@@ -402,8 +402,10 @@ imageFile.addEventListener('change', function () {
 
   console.log("IDADI YA PICHA:", files.length);
 
-  imagePreview.innerHTML = '';
-  imagePreview.style.display = 'block';
+// HESABU PICHA ZILIZOKUWEPO KWENYE PREVIEW
+const existingImages = imagePreview.querySelectorAll('img').length;
+
+imagePreview.style.display = 'block';
 
   if (!files || files.length === 0) {
     return;
@@ -479,7 +481,9 @@ insertButton.addEventListener('click', function () {
 
   const contentField = document.querySelector('#content');
 
-const marker = '\n[PICHA ' + (currentImageIndex + 1) + ']\n';
+const marker = '\n[PICHA ' +
+  (existingImages + currentImageIndex + 1) +
+  ']\n';
 
   const start = contentField.selectionStart;
   const end = contentField.selectionEnd;
@@ -529,90 +533,167 @@ isSaving = true;
       publishButton.disabled = true;
       publishButton.textContent = '⏳ Inapakia...';
 
-      let image_url = null;
-      let imageCaptions = [];
+     let image_url = null;
+let imageCaptions = [];
+let imageUrls = [];
 
-      try {
+try {
 
-       if (files && files.length > 0) {
+  // =====================================
+  // CHUKUA PICHA ZILIZOKUWEPO
+  // WAKATI WA KUHARIRI HABARI
+  // =====================================
 
-  const imageUrls = [];
+  if (editingPostId) {
 
+    const { data: oldPost, error: oldPostError } =
+      await supabaseClient
+        .from('posts')
+        .select('image_url, image_urls, image_captions')
+        .eq('id', editingPostId)
+        .single();
 
-  for (const file of files) {
-   
-
-    if (!file.type.startsWith('image/')) {
-      throw new Error('Tafadhali chagua faili za picha tu.');
-    }
-
-    const fileExtension = file.name.split('.').pop();
-
-    const fileName =
-      Date.now() + '-' +
-      Math.random().toString(36).substring(2, 8) +
-      '.' +
-      fileExtension;
-
-    const filePath = 'habari/' + fileName;
-
-    const { error: uploadError } = await supabaseClient
-      .storage
-      .from('image_url')
-      .upload(filePath, file);
-
-    if (uploadError) {
-      console.error('Hitilafu ya kupakia picha:', uploadError);
+    if (oldPostError) {
       throw new Error(
-        'Picha haikuweza kupakiwa: ' + uploadError.message
+        'Picha za zamani hazikuweza kupatikana: ' +
+        oldPostError.message
       );
     }
 
-    const { data: publicUrlData } =
-      supabaseClient
-        .storage
-        .from('image_url')
-        .getPublicUrl(filePath);
+    imageUrls = oldPost.image_urls || [];
 
-    imageUrls.push(publicUrlData.publicUrl);
+    if (typeof imageUrls === 'string') {
+      try {
+        imageUrls = JSON.parse(imageUrls);
+      } catch (e) {
+        imageUrls = [imageUrls];
+      }
+    }
 
-const captionInputs = document.querySelectorAll('#image_preview input');
+    // Hifadhi picha ya zamani ikiwa image_urls haina picha
+    if (
+      (!imageUrls || imageUrls.length === 0) &&
+      oldPost.image_url
+    ) {
+      imageUrls = [oldPost.image_url];
+    }
 
-imageCaptions = Array.from(captionInputs).map(input =>
-  input.value.trim()
-);
+    imageCaptions = oldPost.image_captions || [];
+
+    if (typeof imageCaptions === 'string') {
+      try {
+        imageCaptions = JSON.parse(imageCaptions);
+      } catch (e) {
+        imageCaptions = [imageCaptions];
+      }
+    }
   }
+
+
+  // =====================================
+  // PAKIA PICHA MPYA
+  // NA ZIONGEZE MWISHONI
+  // =====================================
+
+  if (files && files.length > 0) {
+
+    for (const file of files) {
+
+      if (!file.type.startsWith('image/')) {
+        throw new Error(
+          'Tafadhali chagua faili za picha tu.'
+        );
+      }
+
+      const fileExtension = file.name.split('.').pop();
+
+      const fileName =
+        Date.now() + '-' +
+        Math.random().toString(36).substring(2, 8) +
+        '.' +
+        fileExtension;
+
+      const filePath = 'habari/' + fileName;
+
+      const { error: uploadError } =
+        await supabaseClient
+          .storage
+          .from('image_url')
+          .upload(filePath, file);
+
+      if (uploadError) {
+        console.error(
+          'Hitilafu ya kupakia picha:',
+          uploadError
+        );
+
+        throw new Error(
+          'Picha haikuweza kupakiwa: ' +
+          uploadError.message
+        );
+      }
+
+      const { data: publicUrlData } =
+        supabaseClient
+          .storage
+          .from('image_url')
+          .getPublicUrl(filePath);
+
+      imageUrls.push(publicUrlData.publicUrl);
+    }
+  }
+
+
+  // =====================================
+  // KUSANYA CAPTIONS ZOTE
+  // KWA MPANGILIO WA PICHA
+  // =====================================
+
+  const captionInputs =
+    document.querySelectorAll('#image_preview input');
+
+  if (captionInputs.length > 0) {
+
+    imageCaptions = Array.from(captionInputs).map(input =>
+      input.value.trim()
+    );
+
+  }
+
+
+  // =====================================
+  // PICHA YA KWANZA
+  // =====================================
 
   image_url = imageUrls[0] || null;
 
   var image_urls = imageUrls;
-}
+
 
          
 let data;
 let error;
 
 if (editingPostId) {
-const captionInputs = document.querySelectorAll('#image_preview input');
 
-imageCaptions = Array.from(captionInputs).map(input =>
-  input.value.trim()
-);
+  const captionInputs = document.querySelectorAll('#image_preview input');
 
-const updateData = {
-  title: title,
-  category: category,
-  content: content,
-  image_captions: imageCaptions
-};
+  imageCaptions = Array.from(captionInputs).map(input =>
+    input.value.trim()
+  );
 
- 
-  if (files && files.length > 0) {
-    updateData.image_url = image_url;
-    updateData.image_urls = image_urls;
-  }
+  const updateData = {
+    title: title,
+    category: category,
+    content: content,
+    image_url: image_url,
+    image_urls: image_urls,
+    image_captions: imageCaptions
+  };
 
   console.log('EDITING POST ID:', editingPostId);
+  console.log('IMAGES TO SAVE:', image_urls);
+  console.log('CAPTIONS TO SAVE:', imageCaptions);
 
   const result = await supabaseClient
     .from('posts')
@@ -623,10 +704,7 @@ const updateData = {
   data = result.data;
   error = result.error;
 
-
-
 } else {
-
 const result = await supabaseClient
   .from('posts')
   .insert([
